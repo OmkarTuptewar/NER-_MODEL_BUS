@@ -1,0 +1,19 @@
+# Bus NER POC Dependencies
+
+# Transformers & Deep Learning
+transformers>=4.35.0
+torch>=2.0.0
+datasets>=2.14.0
+accelerate>=0.24.0
+seqeval>=1.2.2
+
+# ONNX Runtime for optimized inference
+optimum[onnxruntime]>=1.14.0
+onnxruntime>=1.16.0
+
+# API Framework
+fastapi>=0.100.0
+uvicorn>=0.23.0
+
+# Data Validation
+pydantic>=2.0.0

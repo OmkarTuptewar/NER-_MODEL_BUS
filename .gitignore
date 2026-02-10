@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.whl
+build/
+dist/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# Cache / temp
+.cache/
+tmp/
+temp/
+
+# Model artifacts
+models/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+
+# Data (large / generated)
+data/*.json
+data/*.csv
+data/*.tsv
+data/*.parquet
+data/*.zip
+
+# Outputs
+outputs/
+results/
+
+# Env secrets
+.env
