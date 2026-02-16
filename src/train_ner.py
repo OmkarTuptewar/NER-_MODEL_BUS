@@ -480,7 +480,7 @@ def main():
     # Determine paths
     base_dir = Path(__file__).parent.parent
     data_path = args.data or str(base_dir / "data" / "training_data_bio.json")
-    output_path = args.output or str(base_dir / "models" / "bus_ner_transformer")
+    output_path = args.output or str(base_dir / "models" / "bus_ner_transformerV2")
     
     print("=" * 60)
     print("BUS NER TRAINING PIPELINE (Transformers)")

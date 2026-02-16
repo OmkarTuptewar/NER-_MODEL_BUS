@@ -17,3 +17,54 @@ uvicorn>=0.23.0
 
 # Data Validation
 pydantic>=2.0.0
+
+# python src/data_generator.py
+
+# # Train model
+# python src/train_ner.py --epochs 10
+
+# # Export to ONNX
+# python src/export_onnx.py --verify
+
+# # Test inference
+# python src/inference.py --query "AC sleeper from Bangalore to Mumbai"
+
+# # Start API
+# uvicorn src.api:app --host 0.0.0.0 --port 8000
+
+# # Test API
+# curl -X POST http://localhost:8000/ner/extract \
+#   -H "Content-Type: application/json" \
+#   -d '{"query": "VRL AC sleeper from Chennai to Hyderabad tomorrow"}'
+
+
+# 1) Go to project
+# cd /Users/int1964/NerModel_GTEXP1.0
+
+# # 2) Create + activate virtual env
+# python3 -m venv .venv
+# source .venv/bin/activate
+
+# # 3) Upgrade pip + install deps
+# python -m pip install --upgrade pip
+# pip install -r requirements.txt
+
+# # 4) Generate training data
+# python src/data_generator.py
+
+# # 5) Train NEW model (save in a new folder name)
+# python src/train_ner.py --epochs 10 --output models/bus_ner_transformer_v2
+
+# # 6) Point API to this new model
+# export BUS_NER_MODEL_PATH=/Users/int1964/NerModel_GTEXP1.0/models/bus_ner_transformer_v2
+
+# # 7) Start server
+# uvicorn src.api:app --host 0.0.0.0 --port 8000
+
+# Run this:
+# pip install numpypython src/train_ner.py --epochs 10 --output models/bus_ner_transformer_v2
+# Better (recommended), install full project deps again so next missing package doesn’t fail one-by-one:
+# pip install -r requirements.txtpip install numpypython src/train_ner.py --epochs 10 --output models/bus_ner_transformer_v2
+# Why this happened:
+# train_ner.py imports numpy
+# current requirements.txt does not include numpy, so it wasn’t installed automatically.

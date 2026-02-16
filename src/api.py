@@ -23,7 +23,7 @@ from inference import BusNERInference
 MODEL_TYPE = "MiniLM Transformer (microsoft/MiniLM-L12-H384-uncased)"
 
 # Model path - can be overridden by environment variable
-DEFAULT_MODEL_PATH = Path(__file__).parent.parent / "models" / "bus_ner_transformer"
+DEFAULT_MODEL_PATH = Path(__file__).parent.parent / "models" / "bus_ner_transformer_v3"
 MODEL_PATH = os.environ.get("BUS_NER_MODEL_PATH", str(DEFAULT_MODEL_PATH))
 
 
@@ -44,16 +44,27 @@ class NERRequest(BaseModel):
 
 class EntityResult(BaseModel):
     """Structured entity extraction result."""
-    SRC: List[str] = Field(default_factory=list, description="Source city")
-    DEST: List[str] = Field(default_factory=list, description="Destination city")
-    BUS_TYPE: List[str] = Field(default_factory=list, description="Bus type (AC/Non-AC)")
-    SEAT_TYPE: List[str] = Field(default_factory=list, description="Seat type (Sleeper/Seater)")
-    TIME: List[str] = Field(default_factory=list, description="Time of travel")
-    DATE: List[str] = Field(default_factory=list, description="Date of travel")
-    OPERATOR: List[str] = Field(default_factory=list, description="Bus operator")
-    BOARDING_POINT: List[str] = Field(default_factory=list, description="Pickup location")
-    DROPPING_POINT: List[str] = Field(default_factory=list, description="Drop location")
-
+    SOURCE_NAME: List[str] = Field(default_factory=list)
+    SOURCE_CITY_CODE: List[str] = Field(default_factory=list)
+    DESTINATION_NAME: List[str] = Field(default_factory=list)
+    DESTINATION_CITY_CODE: List[str] = Field(default_factory=list)
+    DEPARTURE_DATE: List[str] = Field(default_factory=list)
+    DEPARTURE_TIME: List[str] = Field(default_factory=list)
+    ARRIVAL_TIME: List[str] = Field(default_factory=list)
+    PICKUP_POINT: List[str] = Field(default_factory=list)
+    DROP_POINT: List[str] = Field(default_factory=list)
+    AC_TYPE: List[str] = Field(default_factory=list)
+    BUS_TYPE: List[str] = Field(default_factory=list)
+    SEAT_TYPE: List[str] = Field(default_factory=list)
+    AMENITIES: List[str] = Field(default_factory=list)
+    BUS_FEATURES: List[str] = Field(default_factory=list)
+    OPERATOR: List[str] = Field(default_factory=list)
+    COUPON_CODE: List[str] = Field(default_factory=list)
+    DEALS: List[str] = Field(default_factory=list)
+    ADD_ONS: List[str] = Field(default_factory=list)
+    PRICE: List[str] = Field(default_factory=list)
+    SEMANTIC: List[str] = Field(default_factory=list)
+    TRAVELER: List[str] = Field(default_factory=list)
 
 class NERResponse(BaseModel):
     """Response model for NER extraction."""

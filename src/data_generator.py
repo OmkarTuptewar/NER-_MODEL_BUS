@@ -79,7 +79,7 @@ def fill_template(template: str) -> Tuple[str, List[Tuple[int, int, str]]]:
     if not placeholders:
         return template, []
     
-    # Track values to avoid same SRC and DEST
+    # Track values to avoid same source/destination values
     used_values = {}
     entity_positions = []
     
@@ -88,12 +88,16 @@ def fill_template(template: str) -> Tuple[str, List[Tuple[int, int, str]]]:
     offset = 0  # Track offset as we replace text
     
     for entity_type, template_pos in placeholders:
-        # Get a value, ensuring SRC != DEST
+        # Keep source/destination entities different for better training quality.
         exclude = []
-        if entity_type == "DEST" and "SRC" in used_values:
-            exclude = [used_values["SRC"]]
-        elif entity_type == "SRC" and "DEST" in used_values:
-            exclude = [used_values["DEST"]]
+        if entity_type == "DESTINATION_NAME" and "SOURCE_NAME" in used_values:
+            exclude = [used_values["SOURCE_NAME"]]
+        elif entity_type == "SOURCE_NAME" and "DESTINATION_NAME" in used_values:
+            exclude = [used_values["DESTINATION_NAME"]]
+        elif entity_type == "DESTINATION_CITY_CODE" and "SOURCE_CITY_CODE" in used_values:
+            exclude = [used_values["SOURCE_CITY_CODE"]]
+        elif entity_type == "SOURCE_CITY_CODE" and "DESTINATION_CITY_CODE" in used_values:
+            exclude = [used_values["DESTINATION_CITY_CODE"]]
         
         value = get_random_value(entity_type, exclude)
         used_values[entity_type] = value
