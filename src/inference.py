@@ -1,12 +1,14 @@
 
 import json
 import numpy as np
+import re
 from pathlib import Path
 from typing import Dict, Any, List, Tuple, Union
 
 from transformers import AutoTokenizer
 
 from constants.entity_labels import ENTITY_LABELS
+from constants.entity_values import ENTITY_VALUES
 
 
 # =============================================================================
@@ -264,6 +266,122 @@ class BusNERInference:
                 end_char += 1  # Add space between words
         
         return start_char, end_char
+
+    def _append_unique(self, values: List[str], value: str) -> None:
+        """Append cleaned non-empty value if not already present."""
+        if value and value not in values:
+            values.append(value)
+
+    def _post_process_entities(self, query: str, entities: Dict[str, List[str]]) -> Dict[str, List[str]]:
+        """
+        Apply lightweight normalization and boundary fixes to model output.
+        This reduces common errors like merged labels and punctuation artifacts.
+        """
+        result = {k: list(v) for k, v in entities.items()}
+
+        # 1) Strip trailing punctuation/noise from all predicted entity strings.
+        for label, values in result.items():
+            cleaned_values: List[str] = []
+            for value in values:
+                cleaned = re.sub(r"\s+", " ", value).strip(" \t\n\r,.;:!?")
+                # Keep parentheses for city-code extraction in next step.
+                self._append_unique(cleaned_values, cleaned)
+            result[label] = cleaned_values
+
+        # 2) Recover city codes merged into source/destination names.
+        #    Handles both "City (CODE)" and "City CODE".
+        for name_key, code_key in [
+            ("SOURCE_NAME", "SOURCE_CITY_CODE"),
+            ("DESTINATION_NAME", "DESTINATION_CITY_CODE"),
+        ]:
+            updated_names: List[str] = []
+            for value in result.get(name_key, []):
+                m = re.match(r"^(.*?)\s*\(([A-Z]{2,5})\)$", value)
+                if not m:
+                    m = re.match(r"^(.*?)\s+([A-Z]{2,5})$", value)
+                if m:
+                    city = m.group(1).strip(" \t\n\r,.;:!?")
+                    code = m.group(2).strip()
+                    self._append_unique(updated_names, city)
+                    self._append_unique(result[code_key], code)
+                else:
+                    self._append_unique(updated_names, value)
+            result[name_key] = updated_names
+
+        # 3) Split merged AC spans such as "VRL AC" / "Volvo AC".
+        #    Move prefix to OPERATOR or BUS_TYPE when obvious.
+        ac_normalized: List[str] = []
+        operator_hints = {"vrl", "ksrtc", "msrtc", "apsrtc", "gsrtc", "tsrtc", "tnstc", "setc", "kpn", "srs"}
+        bus_type_hints = {"volvo", "scania", "benz", "leyland", "coach", "bus", "axle", "decker", "shuttle"}
+        ac_pattern = re.compile(
+            r"^(.+?)\s+(AC|NON AC|Non AC|non ac|non-ac|air conditioned|air-conditioned|with ac|without ac)$",
+            flags=re.IGNORECASE,
+        )
+        for value in result.get("AC_TYPE", []):
+            m = ac_pattern.match(value)
+            if not m:
+                self._append_unique(ac_normalized, value)
+                continue
+
+            prefix = m.group(1).strip()
+            ac_value = m.group(2).strip()
+            prefix_l = prefix.lower()
+            ac_value_u = ac_value.upper().replace("-", " ")
+
+            if prefix_l in operator_hints or prefix.isupper():
+                self._append_unique(result["OPERATOR"], prefix)
+            elif any(h in prefix_l for h in bus_type_hints):
+                self._append_unique(result["BUS_TYPE"], prefix)
+            else:
+                # Unknown prefix: keep original merged value to avoid dropping data.
+                self._append_unique(ac_normalized, value)
+                continue
+
+            # Normalize AC value
+            if ac_value_u == "AC":
+                self._append_unique(ac_normalized, "AC")
+            elif ac_value_u in {"NON AC", "NON  AC"}:
+                self._append_unique(ac_normalized, "Non AC")
+            else:
+                self._append_unique(ac_normalized, ac_value)
+        result["AC_TYPE"] = ac_normalized
+
+        # 4) Merge fragmented price phrases like ["under", "₹2000"].
+        comparators = {"under", "below", "above"}
+        merged_price: List[str] = []
+        i = 0
+        prices = result.get("PRICE", [])
+        while i < len(prices):
+            cur = prices[i]
+            nxt = prices[i + 1] if i + 1 < len(prices) else ""
+            if cur.lower() in comparators and re.match(r"^(?:₹?\d[\d,]*)(?:\.\d+)?(?:\s*Rs)?$", nxt, flags=re.IGNORECASE):
+                self._append_unique(merged_price, f"{cur} {nxt}".strip())
+                i += 2
+            else:
+                self._append_unique(merged_price, cur)
+                i += 1
+        result["PRICE"] = merged_price
+
+        # 5) If "live" is split into amenities in phrase "live tracking", restore feature.
+        if "live" in [v.lower() for v in result.get("AMENITIES", [])] and "live tracking" in query.lower():
+            result["AMENITIES"] = [v for v in result["AMENITIES"] if v.lower() != "live"]
+            self._append_unique(result["BUS_FEATURES"], "live tracking")
+
+        # 6) Prevent operator names from leaking into coupon codes.
+        operator_values = {v.lower() for v in ENTITY_VALUES.get("OPERATOR", [])}
+        coupon_values = {v.lower() for v in ENTITY_VALUES.get("COUPON_CODE", [])}
+        filtered_coupons: List[str] = []
+        for value in result.get("COUPON_CODE", []):
+            value_l = value.lower()
+            if value_l in operator_values:
+                self._append_unique(result["OPERATOR"], value)
+                continue
+            # Keep recognized coupons or code-like tokens.
+            if value_l in coupon_values or re.match(r"^[A-Za-z0-9_-]{4,}$", value):
+                self._append_unique(filtered_coupons, value)
+        result["COUPON_CODE"] = filtered_coupons
+
+        return result
     
     def extract(self, query: str) -> Dict[str, List[str]]:
         """
@@ -285,8 +403,8 @@ class BusNERInference:
         for entity_text, label, _, _ in entities:
             if label in result and entity_text not in result[label]:
                 result[label].append(entity_text)
-        
-        return result
+
+        return self._post_process_entities(query, result)
     
     def extract_detailed(self, query: str) -> Dict[str, Any]:
         """
@@ -317,7 +435,9 @@ class BusNERInference:
             
             if label in entities and entity_text not in entities[label]:
                 entities[label].append(entity_text)
-        
+
+        entities = self._post_process_entities(query, entities)
+
         return {
             "query": query,
             "entities": entities,

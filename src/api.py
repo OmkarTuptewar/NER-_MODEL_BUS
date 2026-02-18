@@ -23,7 +23,7 @@ from inference import BusNERInference
 MODEL_TYPE = "MiniLM Transformer (microsoft/MiniLM-L12-H384-uncased)"
 
 # Model path - can be overridden by environment variable
-DEFAULT_MODEL_PATH = Path(__file__).parent.parent / "models" / "bus_ner_transformer_v3"
+DEFAULT_MODEL_PATH = Path(__file__).parent.parent / "models" / "bus_ner_onnx_v5"
 MODEL_PATH = os.environ.get("BUS_NER_MODEL_PATH", str(DEFAULT_MODEL_PATH))
 
 
@@ -49,6 +49,7 @@ class EntityResult(BaseModel):
     DESTINATION_NAME: List[str] = Field(default_factory=list)
     DESTINATION_CITY_CODE: List[str] = Field(default_factory=list)
     DEPARTURE_DATE: List[str] = Field(default_factory=list)
+    ARRIVAL_DATE: List[str] = Field(default_factory=list)
     DEPARTURE_TIME: List[str] = Field(default_factory=list)
     ARRIVAL_TIME: List[str] = Field(default_factory=list)
     PICKUP_POINT: List[str] = Field(default_factory=list)
@@ -133,7 +134,7 @@ async def lifespan(app: FastAPI):
     print(f"Model path: {MODEL_PATH}")
     
     try:
-        ner_inference = BusNERInference(MODEL_PATH,use_onnx=False)
+        ner_inference = BusNERInference(MODEL_PATH,use_onnx=True)
         print("Model loaded successfully!")
         print("=" * 60)
     except FileNotFoundError as e:

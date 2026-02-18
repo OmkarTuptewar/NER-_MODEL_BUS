@@ -68,3 +68,5 @@ pydantic>=2.0.0
 # Why this happened:
 # train_ner.py imports numpy
 # current requirements.txt does not include numpy, so it wasn’t installed automatically.
+
+#    python src/export_onnx.py --model models/bus_ner_transformer_v5 --output models/bus_ner_onnx_v5

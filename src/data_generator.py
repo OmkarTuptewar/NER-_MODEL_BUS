@@ -196,7 +196,14 @@ def save_training_data(samples: List[Dict[str, Any]], output_path: str) -> None:
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     
     with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(samples, f, indent=2, ensure_ascii=False)
+       f.write("[\n")
+       for i, sample in enumerate(samples):
+            line = json.dumps(sample, ensure_ascii=False, separators=(",", ":"))
+            if i < len(samples) - 1:
+                f.write(f"  {line},\n")
+            else:
+                f.write(f"  {line}\n")
+       f.write("]\n")
     
     print(f"Saved {len(samples)} samples to {output_path}")
 
@@ -277,20 +284,13 @@ def convert_span_to_bio(
     text = sample["text"]
     entities = sample["entities"]  # [[start, end, label], ...]
     
-    # Simple whitespace tokenization
-    tokens = text.split()
+    # Regex tokenization with character spans.
+    # This avoids punctuation being glued to entities (e.g., "PM,", "(PNQ)").
+    token_matches = list(re.finditer(r"₹\d+(?:,\d+)*(?:\.\d+)?|\d{1,2}:\d{2}|[A-Za-z0-9_]+(?:[-/][A-Za-z0-9_]+)*|[^\w\s]", text))
+    tokens = [m.group(0) for m in token_matches]
     
     if not tokens:
         return None
-    
-    # Build character offset to token index mapping
-    char_to_token = {}
-    current_char = 0
-    
-    for token_idx, token in enumerate(tokens):
-        for i in range(len(token)):
-            char_to_token[current_char + i] = token_idx
-        current_char += len(token) + 1  # +1 for space
     
     # Initialize all tags as "O"
     label2id, _ = get_label_mappings()
@@ -299,17 +299,18 @@ def convert_span_to_bio(
     # Assign BIO tags based on entity spans
     for start, end, label in entities:
         # Find tokens that overlap with this entity span
-        entity_token_indices = set()
-        for char_idx in range(start, end):
-            if char_idx in char_to_token:
-                entity_token_indices.add(char_to_token[char_idx])
+        entity_token_indices = []
+        for token_idx, match in enumerate(token_matches):
+            token_start = match.start()
+            token_end = match.end()
+            if token_start < end and token_end > start:
+                entity_token_indices.append(token_idx)
         
         if not entity_token_indices:
             continue
         
         # Sort token indices and assign B/I tags
-        sorted_indices = sorted(entity_token_indices)
-        for i, token_idx in enumerate(sorted_indices):
+        for i, token_idx in enumerate(entity_token_indices):
             if i == 0:
                 ner_tags[token_idx] = label2id[f"B-{label}"]
             else:
@@ -430,7 +431,7 @@ def print_bio_examples(bio_samples: List[Dict[str, Any]], num_examples: int = 3)
 
 if __name__ == "__main__":
     # Configuration
-    NUM_SAMPLES = 2000  # Increased for better coverage
+    NUM_SAMPLES = 200000 # Increased for better coverage
     BASE_DIR = Path(__file__).parent.parent
     SPAN_OUTPUT_PATH = BASE_DIR / "data" / "training_data.json"
     BIO_OUTPUT_PATH = BASE_DIR / "data" / "training_data_bio.json"

@@ -195,6 +195,20 @@ ENTITY_VALUES = {
 "18/01/2026", "06 February 2026", "21-11-2025"
     ],
 
+    "ARRIVAL_DATE": [
+"today", "tomorrow", "day after tomorrow", "next day", "same day", "monday", "tuesday",
+"wednesday", "thursday", "friday", "saturday", "sunday", "10 feb", "12 february", "1st march",
+"15/02", "2026-02-15", "26 January 2026", "30 January 2026", "7 February 2026", "12 February 2026",
+"15 November 2025", "28 December", "29 December 2025", "January 15, 2026", "January 26, 2026",
+"17 October 2025", "21 October 2025", "02-01-2026", "04 Feb 2026", "16 March 2026", "today", "tomorrow", "day after tomorrow", "this weekend", "next weekend", "next week", "monday",
+"tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "10 feb",
+"12 february", "1st march", "15/02", "2026-02-15", "September 15, 2025", "27 September 2025", "January 7, 2026",
+"15th November 2025", "14th August", "January 29, 2026", "January 14th", "August 8", "26 February 2026", "January 23, 2026",
+"2025-10-17", "08-12-2025", "23rd January 2026", "2026-01-16", "18th October 2025", "28 December", "15 November 2025",
+"November 17, 2025", "17th October 2025", "14-10-2025", "August 15, 2025", "23 January 2026", "25 September 2025", "December 28, 2025",
+"23-11-2025", "October 15th", "January 27, 2026", "15 October 2025", "December 27, 2025"
+    ],
+
 
     "DEPARTURE_TIME": [
 "early morning","Morning","morning", "before sunrise", "morning hours", "post breakfast", "afternoon time", "after lunch", "evening hours",
@@ -210,17 +224,17 @@ ENTITY_VALUES = {
 
 
     "ARRIVAL_TIME": [
- "by morning", "before noon", "after lunch", "early arrival", "late arrival", "reach by 6am", "arrive before 10",
-"by morning", "before noon", "after lunch", "early arrival", "late arrival", "reach by 6am", "arrive before 10",
+ "by morning", "before noon", "after lunch", "early arrival", "late arrival", "by 6am", "before 10",
+"by morning", "before noon", "after lunch", "early arrival", "late arrival", "reach by 6am", "before 10",
 "before 1 PM", "Tuesday morning", "7:00 AM", "between 6:00 AM and 6:30 AM", "3:30 PM", "by 23rd evening", "10 hours",
-"before 6:00 am","reach early morning", "reach before morning", "arrive in morning", "morning arrival", "reach by sunrise", "arrive before sunrise", "arrive at dawn",
-"reach before 8 am", "reach before 9 am", "reach before 10 am", "arrive before 11 am", "arrive before 12 pm", "reach by noon", "arrive around noon",
+"before 6:00 am","reach early morning", "reach before morning", "in morning", "morning arrival", "reach by sunrise", "before sunrise", "at dawn",
+"reach before 8 am", "reach before 9 am", "reach before 10 am", "before 11 am", "arrive before 12 pm", "reach by noon", "arrive around noon",
 "arrive in afternoon", "reach after lunch", "reach by afternoon", "afternoon arrival", "arrive by 3 pm", "reach by 4 pm", "arrive before evening",
 "reach by evening", "arrive by 6 pm", "arrive around evening", "evening arrival", "arrive before sunset", "reach before night", "arrive before 8 pm",
 "arrive at night", "night arrival", "reach late evening", "arrive late night", "reach before midnight", "arrive before 12 am", "midnight arrival",
 "reach after midnight", "arrive early night", "arrive by next morning", "reach next day morning", "arrive next day", "reach by tomorrow morning", "arrival next morning",
-"reach same day", "arrive same day", "same day arrival", "reach within the day", "arrive in 8 hours", "arrive in 10 hours", "arrive in 12 hours",
-"reach in 6 hrs", "reach in 7 hrs", "reach in 9 hrs", "arrive within 5 hours", "arrive within 6 hours", "arrive within 7 hours", "arrive within 9 hours"
+"reach same day", "arrive same day", "same day arrival", "reach within the day", "in 8 hours", "in 10 hours", "in 12 hours",
+"reach in 6 hrs", "reach in 7 hrs", "reach in 9 hrs", "within 5 hours", "within 6 hours", "within 7 hours", "within 9 hours"
     ],
 
     # =========================
@@ -529,13 +543,18 @@ ENTITY_VALUES = {
     ],
 
     "TRAVELER": [
- "adult", "children", "senior citizen", "family", "couple", "group",
-"solo", "bachelor", "bachelorette", "business traveler", "student", "traveller", "tourist",
 "1 traveler", "2 travelers", "two travelers", "3 travelers", "4 travelers", "6 travelers", "7 travelers",
 "8 travelers", "9 travelers", "10 travelers", "11 passengers", "2 people", "8 people", "10 people",
-"11 people", "20 people", "2 adults", "four adults", "5 adults", "female traveler", "single traveler",
+"11 people", "20 people", "2 adults", "four adults", "5 adults",
 "single adult passenger", "4 passengers", "2 passengers", "1 passenger", "3 females", "3 males", "7 boys",
 "30 ladies", "4 adult women", "8 persons", "2 persons", "4 persons", "12 persons", "5 members",
 "40 members", "26 passengers", "15 adults", "7 travelers (4 adults and 3 kids)", "2 adults and an infant"
+  "tickets for 2", "tickets for 3", "tickets for 4","group of 3", "group of 4", "group of 5", "group of 6","family of 3",
+"family of 4","seat for 2", "seat for 3", "seat for 4",
+"2 tickets", "3 tickets", "4 tickets", "5 tickets",
+"family of 5",
+"family of 6",  
+    
+    
     ]
 }
