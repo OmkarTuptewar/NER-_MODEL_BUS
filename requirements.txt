@@ -6,6 +6,8 @@ torch>=2.0.0
 datasets>=2.14.0
 accelerate>=0.24.0
 seqeval>=1.2.2
+python-dotenv>=1.0.0
+sentencepiece>=0.2.0
 
 # ONNX Runtime for optimized inference
 optimum[onnxruntime]>=1.14.0
@@ -17,6 +19,8 @@ uvicorn>=0.23.0
 
 # Data Validation
 pydantic>=2.0.0
+
+sentencepiece>=0.2.0
 
 # python src/data_generator.py
 
@@ -70,3 +74,29 @@ pydantic>=2.0.0
 # current requirements.txt does not include numpy, so it wasn’t installed automatically.
 
 #    python src/export_onnx.py --model models/bus_ner_transformer_v5 --output models/bus_ner_onnx_v5
+
+
+# # 1. Generate failed patterns data
+# cd /Users/int1964/NerModel_GTEXP1.0
+# python src/generate_failed_data.py
+
+# # This creates:
+# # - data/failed_patterns_span.json (for debugging)
+# # - data/failed_patterns_bio.json (for training)
+# # Total: ~1,250 samples (25 templates × 50 each)
+
+# # 2. Train on failed patterns
+# python src/train_ner.py \
+#     --model_path models/bus_ner_minilm_v7 \
+#     --data_path data/failed_patterns_bio.json \
+#     --output_dir models/bus_ner_minilm_v7_patched \
+#     --num_train_epochs 15 \
+#     --learning_rate 1e-5 \
+#     --batch_size 4 \
+#     --save_strategy epoch
+
+# # 3. Test the patched model
+# python src/inference.py \
+#     --model_path models/bus_ner_minilm_v7_patched \
+#     --query "show me buses from mumbai to delhi tomorrow morning"
+

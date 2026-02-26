@@ -8,11 +8,14 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
 
 # Add src directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
 from inference import BusNERInference
+
+load_dotenv()
 
 
 # =============================================================================
@@ -20,11 +23,29 @@ from inference import BusNERInference
 # =============================================================================
 
 # Model info
-MODEL_TYPE = "MiniLM Transformer (microsoft/MiniLM-L12-H384-uncased)"
+MODEL_TYPE = os.environ.get(
+    "BUS_NER_MODEL_TYPE",
+    "MiniLM Transformer (microsoft/MiniLM-L12-H384-uncased)",
+)
 
-# Model path - can be overridden by environment variable
-DEFAULT_MODEL_PATH = Path(__file__).parent.parent / "models" / "bus_ner_onnx_v5"
-MODEL_PATH = os.environ.get("BUS_NER_MODEL_PATH", str(DEFAULT_MODEL_PATH))
+USE_ONNX = os.environ.get("BUS_NER_USE_ONNX", "true").lower() in {"1", "true", "yes"}
+
+# Model path - can be overridden by environment variables
+DEFAULT_TORCH_PATH = Path(__file__).parent.parent / "models" / "bus_ner_transformer_v5"
+DEFAULT_ONNX_PATH = Path(__file__).parent.parent / "models" / "bus_ner_onnx_v5"
+
+if USE_ONNX:
+    MODEL_PATH = os.environ.get("BUS_NER_ONNX_MODEL_PATH", str(DEFAULT_ONNX_PATH))
+else:
+    MODEL_PATH = os.environ.get("BUS_NER_MODEL_PATH", str(DEFAULT_TORCH_PATH))
+
+def _resolve_env_path(path_value: str) -> str:
+    p = Path(path_value)
+    if not p.is_absolute():
+        p = Path(__file__).parent.parent / p
+    return str(p)
+
+MODEL_PATH = _resolve_env_path(MODEL_PATH)
 
 
 # =============================================================================
@@ -37,7 +58,7 @@ class NERRequest(BaseModel):
         ...,
         description="Bus search query to extract entities from",
         min_length=1,
-        max_length=500,
+        max_length=1000,
         examples=["AC sleeper bus from Bangalore to Mumbai tomorrow"]
  )
 
@@ -132,9 +153,10 @@ async def lifespan(app: FastAPI):
     print("=" * 60)
     print(f"Model type: {MODEL_TYPE}")
     print(f"Model path: {MODEL_PATH}")
+    print(f"Use ONNX: {USE_ONNX}")
     
     try:
-        ner_inference = BusNERInference(MODEL_PATH,use_onnx=True)
+        ner_inference = BusNERInference(MODEL_PATH, use_onnx=USE_ONNX)
         print("Model loaded successfully!")
         print("=" * 60)
     except FileNotFoundError as e:

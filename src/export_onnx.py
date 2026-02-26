@@ -16,11 +16,16 @@ Usage:
 
 import argparse
 import json
+import os
 import shutil
 from pathlib import Path
 from typing import Dict
 
 from transformers import AutoTokenizer, AutoModelForTokenClassification
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 def export_to_onnx(
@@ -182,6 +187,22 @@ def verify_onnx_model(onnx_path: str) -> None:
     print("=" * 60)
 
 
+# =============================================================================
+# ENV HELPERS
+# =============================================================================
+
+def _resolve_env_path(env_value: str, base_dir: Path, fallback: Path) -> str:
+    """
+    Resolve an env path. If relative, treat as relative to project base_dir.
+    """
+    if env_value:
+        candidate = Path(env_value)
+        if not candidate.is_absolute():
+            candidate = base_dir / candidate
+        return str(candidate)
+    return str(fallback)
+
+
 def main():
     """Main export function."""
     parser = argparse.ArgumentParser(description="Export Bus NER Model to ONNX")
@@ -212,8 +233,16 @@ def main():
     
     # Default paths
     base_dir = Path(__file__).parent.parent
-    model_path = args.model or str(base_dir / "models" / "bus_ner_transformer")
-    output_path = args.output or str(base_dir / "models" / "bus_ner_onnx")
+    model_path = args.model or _resolve_env_path(
+        os.getenv("BUS_NER_MODEL_PATH"),
+        base_dir,
+        base_dir / "models" / "bus_ner_transformer",
+    )
+    output_path = args.output or _resolve_env_path(
+        os.getenv("BUS_NER_ONNX_MODEL_PATH"),
+        base_dir,
+        base_dir / "models" / "bus_ner_onnx",
+    )
     
     # Export
     export_to_onnx(model_path, output_path, quantize=args.quantize)

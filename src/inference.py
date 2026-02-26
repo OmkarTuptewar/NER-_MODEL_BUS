@@ -1,14 +1,21 @@
 
 import json
+import os
 import numpy as np
 import re
 from pathlib import Path
 from typing import Dict, Any, List, Tuple, Union
-
 from transformers import AutoTokenizer
 
 from constants.entity_labels import ENTITY_LABELS
 from constants.entity_values import ENTITY_VALUES
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+# Max length for inference truncation
+MAX_LENGTH = int(os.getenv("BUS_NER_MAX_LENGTH", "128"))
 
 
 # =============================================================================
@@ -152,6 +159,11 @@ class BusNERInference:
         Returns:
             List of (entity_text, label, start_char, end_char) tuples
         """
+
+        
+        # Clean quotes/parentheses before tokenization
+        text = self._clean_for_tokenization(text)  # ✨ ADD THIS LINE
+    
         # Tokenize by whitespace for word-level processing
         words = text.split()
         
@@ -164,6 +176,7 @@ class BusNERInference:
             is_split_into_words=True,
             return_tensors="pt",
             truncation=True,
+            max_length=MAX_LENGTH,
             padding=True,
             return_offsets_mapping=False,
         )
@@ -462,7 +475,27 @@ class BusNERInference:
         
         return results
 
-
+    def _clean_for_tokenization(self, text: str) -> str:
+        """
+        Clean query before tokenization to handle quotes/parentheses.
+        
+        Prevents tokenization issues where 'RS becomes a separate token
+        from RS, breaking entity recognition.
+        
+        Args:
+            text: Raw query string
+            
+        Returns:
+            Cleaned query string
+        """
+      
+        # Remove single quotes around phrases
+        text = re.sub(r"'([^']+)'", r"\1", text)
+        # Remove double quotes around phrases
+        text = re.sub(r'"([^"]+)"', r"\1", text)
+        # Remove parentheses around phrases
+        text = re.sub(r"\(([^)]+)\)", r"\1", text)
+        return text
 # =============================================================================
 # STANDALONE FUNCTIONS
 # =============================================================================
@@ -493,6 +526,22 @@ def extract_entities(ner: BusNERInference, query: str) -> Dict[str, List[str]]:
         Dictionary with entity types and values
     """
     return ner.extract(query)
+
+
+# =============================================================================
+# ENV HELPERS
+# =============================================================================
+
+def _resolve_env_path(env_value: str, base_dir: Path, fallback: Path) -> str:
+    """
+    Resolve an env path. If relative, treat as relative to project base_dir.
+    """
+    if env_value:
+        candidate = Path(env_value)
+        if not candidate.is_absolute():
+            candidate = base_dir / candidate
+        return str(candidate)
+    return str(fallback)
 
 
 # =============================================================================
@@ -527,9 +576,17 @@ def main():
     # Determine model path
     base_dir = Path(__file__).parent.parent
     if args.onnx:
-        default_path = base_dir / "models" / "bus_ner_onnx"
+        default_path = _resolve_env_path(
+            os.getenv("BUS_NER_ONNX_MODEL_PATH"),
+            base_dir,
+            base_dir / "models" / "bus_ner_onnx",
+        )
     else:
-        default_path = base_dir / "models" / "bus_ner_transformer"
+        default_path = _resolve_env_path(
+            os.getenv("BUS_NER_MODEL_PATH"),
+            base_dir,
+            base_dir / "models" / "bus_ner_transformer",
+        )
     
     model_path = args.model or str(default_path)
     

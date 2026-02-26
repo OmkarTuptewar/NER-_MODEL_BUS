@@ -5,13 +5,13 @@ import re
 import os
 from pathlib import Path
 from typing import List, Dict, Tuple, Any, Optional
-
+from dotenv import load_dotenv
 from constants.entity_values import ENTITY_VALUES
 from constants.templates import TEMPLATES
 from constants.entity_labels import ENTITY_LABELS
 
-
-
+# Load environment variables
+load_dotenv()
 
 def get_random_value(entity_type: str, exclude: List[str] = None) -> str:
     """
@@ -63,32 +63,79 @@ def find_entity_spans(text: str, entity_positions: List[Tuple[str, str, int]]) -
 
 
 def fill_template(template: str) -> Tuple[str, List[Tuple[int, int, str]]]:
-    """
-    Fill a template with random entity values and compute spans.
-    
-    Args:
-        template: Query template with {ENTITY_TYPE} placeholders
-    
-    Returns:
-        Tuple of (filled_text, entity_spans)
-    """
-    # Find all placeholders in the template
     pattern = r'\{([A-Z_]+)\}'
     placeholders = [(m.group(1), m.start()) for m in re.finditer(pattern, template)]
     
     if not placeholders:
         return template, []
     
-    # Track values to avoid same source/destination values
     used_values = {}
     entity_positions = []
-    
-    # Build the filled text by replacing placeholders
     result = template
-    offset = 0  # Track offset as we replace text
-    
+
+    # ── Helper: get text after a placeholder in the ORIGINAL template ────────
+    def _text_after(tpl: str, placeholder: str, tpl_pos: int, chars: int = 10) -> str:
+        """Return the lowercase stripped text that follows a placeholder."""
+        ph_end = tpl.find(placeholder, tpl_pos) + len(placeholder)
+        return tpl[ph_end : ph_end + chars].lstrip().lower()
+
+    # ── Pre-compute filtered value pools ──────────────────────────────────────
+
+    # BUS_TYPE: values ending in "bus"/"coach"/"shuttle"
+    BUS_TYPE_WITH_BUS = {
+        v for v in ENTITY_VALUES["BUS_TYPE"]
+        if v.lower().rstrip().endswith(("bus", "coach", "shuttle"))
+    }
+    BUS_TYPE_WITHOUT_BUS = [v for v in ENTITY_VALUES["BUS_TYPE"] if v not in BUS_TYPE_WITH_BUS]
+    BUS_TYPE_ALL = ENTITY_VALUES["BUS_TYPE"]
+
+    # TRAVELER: values containing "ticket"/"seat"
+    TRAVELER_PERSON_ONLY = [
+        v for v in ENTITY_VALUES["TRAVELER"]
+        if "ticket" not in v.lower() and "seat" not in v.lower()
+    ]
+    TRAVELER_ALL = ENTITY_VALUES["TRAVELER"]
+
+    # BUS_FEATURES: values ending in "bus"
+    BUS_FEATURES_WITHOUT_BUS = [
+        v for v in ENTITY_VALUES["BUS_FEATURES"]
+        if not v.lower().rstrip().endswith("bus")
+    ]
+    BUS_FEATURES_ALL = ENTITY_VALUES["BUS_FEATURES"]
+
+    # OPERATOR: values ending in "bus"/"Bus"
+    OPERATOR_WITHOUT_BUS = [
+        v for v in ENTITY_VALUES["OPERATOR"]
+        if not v.lower().rstrip().endswith(("bus", "bus service", "bus tours and travels"))
+    ]
+    OPERATOR_ALL = ENTITY_VALUES["OPERATOR"]
+
+    # AC_TYPE: values containing "bus"
+    AC_TYPE_WITHOUT_BUS = [
+        v for v in ENTITY_VALUES["AC_TYPE"]
+        if "bus" not in v.lower()
+    ]
+    AC_TYPE_ALL = ENTITY_VALUES["AC_TYPE"]
+
+    # SEMANTIC: values ending in "bus"
+    SEMANTIC_WITHOUT_BUS = [
+        v for v in ENTITY_VALUES["SEMANTIC"]
+        if not v.lower().rstrip().endswith("bus")
+    ]
+    SEMANTIC_ALL = ENTITY_VALUES["SEMANTIC"]
+
+    # SEAT_TYPE: values ending in "seat" or "berth"
+    SEAT_TYPE_WITHOUT_SEAT = [
+        v for v in ENTITY_VALUES["SEAT_TYPE"]
+        if not v.lower().rstrip().endswith("seat")
+    ]
+    SEAT_TYPE_WITHOUT_BERTH = [
+        v for v in ENTITY_VALUES["SEAT_TYPE"]
+        if not v.lower().rstrip().endswith("berth")
+    ]
+    SEAT_TYPE_ALL = ENTITY_VALUES["SEAT_TYPE"]
+
     for entity_type, template_pos in placeholders:
-        # Keep source/destination entities different for better training quality.
         exclude = []
         if entity_type == "DESTINATION_NAME" and "SOURCE_NAME" in used_values:
             exclude = [used_values["SOURCE_NAME"]]
@@ -98,23 +145,89 @@ def fill_template(template: str) -> Tuple[str, List[Tuple[int, int, str]]]:
             exclude = [used_values["SOURCE_CITY_CODE"]]
         elif entity_type == "SOURCE_CITY_CODE" and "DESTINATION_CITY_CODE" in used_values:
             exclude = [used_values["DESTINATION_CITY_CODE"]]
-        
-        value = get_random_value(entity_type, exclude)
+
+        # ── Context-aware value selection ─────────────────────────────────────
+        if entity_type == "BUS_TYPE":
+            placeholder_str = "{BUS_TYPE}"
+            after = _text_after(template, placeholder_str, template_pos)
+            if after.startswith("bus"):
+                pool = [v for v in BUS_TYPE_WITHOUT_BUS if v not in exclude]
+            else:
+                pool = [v for v in BUS_TYPE_ALL if v not in exclude]
+            value = random.choice(pool) if pool else random.choice(BUS_TYPE_ALL)
+
+        elif entity_type == "TRAVELER":
+            placeholder_str = "{TRAVELER}"
+            after = _text_after(template, placeholder_str, template_pos)
+            if after.startswith("ticket"):
+                pool = [v for v in TRAVELER_PERSON_ONLY if v not in exclude]
+            else:
+                pool = [v for v in TRAVELER_ALL if v not in exclude]
+            value = random.choice(pool) if pool else random.choice(TRAVELER_ALL)
+
+        elif entity_type == "BUS_FEATURES":
+            # Skip values ending in "bus" when template has "bus" after {BUS_FEATURES}
+            placeholder_str = "{BUS_FEATURES}"
+            after = _text_after(template, placeholder_str, template_pos)
+            if after.startswith("bus"):
+                pool = [v for v in BUS_FEATURES_WITHOUT_BUS if v not in exclude]
+            else:
+                pool = [v for v in BUS_FEATURES_ALL if v not in exclude]
+            value = random.choice(pool) if pool else random.choice(BUS_FEATURES_ALL)
+
+        elif entity_type == "OPERATOR":
+            # Skip values ending in "bus" when template has "bus" after {OPERATOR}
+            placeholder_str = "{OPERATOR}"
+            after = _text_after(template, placeholder_str, template_pos)
+            if after.startswith("bus"):
+                pool = [v for v in OPERATOR_WITHOUT_BUS if v not in exclude]
+            else:
+                pool = [v for v in OPERATOR_ALL if v not in exclude]
+            value = random.choice(pool) if pool else random.choice(OPERATOR_ALL)
+
+        elif entity_type == "AC_TYPE":
+            # Skip values containing "bus" when template has "bus" after {AC_TYPE}
+            placeholder_str = "{AC_TYPE}"
+            after = _text_after(template, placeholder_str, template_pos)
+            if after.startswith("bus"):
+                pool = [v for v in AC_TYPE_WITHOUT_BUS if v not in exclude]
+            else:
+                pool = [v for v in AC_TYPE_ALL if v not in exclude]
+            value = random.choice(pool) if pool else random.choice(AC_TYPE_ALL)
+
+        elif entity_type == "SEMANTIC":
+            # Skip values ending in "bus" when template has "bus" after {SEMANTIC}
+            placeholder_str = "{SEMANTIC}"
+            after = _text_after(template, placeholder_str, template_pos)
+            if after.startswith("bus"):
+                pool = [v for v in SEMANTIC_WITHOUT_BUS if v not in exclude]
+            else:
+                pool = [v for v in SEMANTIC_ALL if v not in exclude]
+            value = random.choice(pool) if pool else random.choice(SEMANTIC_ALL)
+
+        elif entity_type == "SEAT_TYPE":
+            # Skip values ending in "seat" when template has "seat" after
+            # Skip values ending in "berth" when template has "berth" after
+            placeholder_str = "{SEAT_TYPE}"
+            after = _text_after(template, placeholder_str, template_pos)
+            if after.startswith("seat"):
+                pool = [v for v in SEAT_TYPE_WITHOUT_SEAT if v not in exclude]
+            elif after.startswith("berth"):
+                pool = [v for v in SEAT_TYPE_WITHOUT_BERTH if v not in exclude]
+            else:
+                pool = [v for v in SEAT_TYPE_ALL if v not in exclude]
+            value = random.choice(pool) if pool else random.choice(SEAT_TYPE_ALL)
+
+        else:
+            value = get_random_value(entity_type, exclude)
+
         used_values[entity_type] = value
-        
-        # Calculate position in the result string
         placeholder = "{" + entity_type + "}"
         pos_in_result = result.find(placeholder)
-        
-        # Record the entity position before replacement
         entity_positions.append((entity_type, value, pos_in_result))
-        
-        # Replace the placeholder
         result = result.replace(placeholder, value, 1)
-    
-    # Now find the actual spans in the final text
+
     spans = find_entity_spans(result, entity_positions)
-    
     return result, spans
 
 
@@ -431,10 +544,13 @@ def print_bio_examples(bio_samples: List[Dict[str, Any]], num_examples: int = 3)
 
 if __name__ == "__main__":
     # Configuration
-    NUM_SAMPLES = 200000 # Increased for better coverage
+    NUM_SAMPLES = int(os.getenv("BUS_NER_NUM_SAMPLES", "27000"))
     BASE_DIR = Path(__file__).parent.parent
+    
+    # Use environment variable for data path
+    data_path = os.getenv("BUS_NER_DATA_PATH", "data/training_data_bio.json")
     SPAN_OUTPUT_PATH = BASE_DIR / "data" / "training_data.json"
-    BIO_OUTPUT_PATH = BASE_DIR / "data" / "training_data_bio.json"
+    BIO_OUTPUT_PATH = BASE_DIR / data_path if not Path(data_path).is_absolute() else Path(data_path)
     LABEL_DIR = BASE_DIR / "data"
     
     print("Bus NER Data Generator")

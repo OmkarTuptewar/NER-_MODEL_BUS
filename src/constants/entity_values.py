@@ -5,21 +5,25 @@ ENTITY_VALUES = {
     # =========================
     "SOURCE_NAME": [
    "Bangalore", "Bengaluru", "Bangalore City", "Mumbai", "Bombay", "Mumbai City", "Chennai",
-"Madras", "Hyderabad", "Secunderabad", "Delhi", "New Delhi", "NCR Delhi", "Pune City",
+"Madras", "Hyderabad", "Secunderabad", "Delhi","Dilli", "Dehli", "Delhy", "Deli",
+"Puna", "Poona", "Punee", "goa" ,"bangalore", "bengaluru", "mumbai", "chennai", "hyderabad", "delhi", "pune",
+"kolkata", "ahmedabad", "jaipur", "goa","Kochin", "Kocchi",
+"Kozhikod","kolkata", "jaipur", "ahmedabad", "kochi", "nagpur", "indore", "bhopal","mysore", "mangalore", "udaipur", "jodhpur", "varanasi", "agra",
+"Vishakapatnam", "Vishakhapatanam", "Visakhapatam", "New Delhi", "NCR Delhi", "Pune City", "Goa",
 "Pune Station", "Coimbatore City", "Kovai", "Trivandrum City", "Thiruvananthapuram", "Visakhapatnam", "Vizag City",
 "BANGALORE", "BENGALURU", "BANGALORE CITY", "MUMBAI", "BOMBAY", "MUMBAI CITY", "CHENNAI",
 "MADRAS", "HYDERABAD", "SECUNDERABAD", "DELHI", "NEW DELHI", "NCR DELHI", "PUNE CITY",
 "PUNE STATION", "COIMBATORE CITY", "KOVAI", "TRIVANDRUM CITY", "THIRUVANANTHAPURAM", "VISAKHAPATNAM", "VIZAG CITY",
-"Kukke Subramanya", "Delhi Airport", "Pune", "Matkaputa Road", "Kolhapur", "Ahmedabad", "Vijayawada",
+"Kukke Subramanya", "Pune", "Matkaputa Road", "Kolhapur", "Ahmedabad", "Vijayawada",
 "Mangalore", "Vijayawada, Andhra Pradesh", "Mohali", "Raipur", "Vyara", "Rajagangapur", "Chandigarh",
 "Pollachi", "Madurai", "Dharamshala", "Pudukottai", "Nellore", "Coimbatore", "Cuttack",
-"Dehradun", "Jaipur", "Narsi (Maharashtra)", "Tiruchirapalli", "Aurangabad", "Ambala", "Pathankot",
+"Dehradun", "Jaipur", "Narsi (Maharashtra)", "Tiruchirapalli", "Aurangabad", "Pathankot",
 "Chilamkur", "Thrissur", "Haveri", "Haldwani", "Guwahati", "Tirupati", "Kochi",
 "Sarai Mir", "Davangere", "Saharanpur", "Morena", "Markapur", "Kanpur", "Jeypore",
 "Ramanagaram", "Gaya", "Malappuram", "Rawatsar", "Tiruppur", "Chhindwara", "Bathinda",
-"Jodhpur", "Kolkata", "Dankuni", "Songadh", "Hebbal", "Ayodhya", "Murthal",
+"Jodhpur", "Kolkata", "Dankuni", "Songadh", "Ayodhya", "Murthal",
 "Indore", "Latur", "Jalandhar", "Durgapur", "Dwarka", "Tirunelveli", "Anand",
-"Rishikesh", "Sattur", "Karimnagar", "Durg", "Athani (Kerala)", "Kalyan", "Salem",
+"Rishikesh", "Sattur", "Karimnagar", "Durg", "Athani (Kerala)", "Salem",
 "Sikar", "Jadugoda", "Kullu", "Basti", "Vadodara", "Navalur", "Gobichettipalaiyam",
 "Halisahar, 24 Parganas North", "Chandrapur", "Kundapura", "Nadiad", "Varanasi", "Mehsana(Gujarat)", "Bhagalpur",
 "Paramakudi", "Belagavi", "Ville Parle", "Gandhinagar", "Roorkee", "Harihar", "Allahabad",
@@ -50,13 +54,9 @@ ENTITY_VALUES = {
 "Bhuj", "Baran", "Dharmasthala", "Ahmednagar", "Malkapur", "Kaithal", "Aland",
 "Ambur", "Rewa", "Kalol", "Shirwal", "Sri Ganganagar", "Ambikapur", "Khandwa",
 "Sambalpur", "Alapuzha", "Manipal", "Bhadrachalam", "Karnal", "Tadipatri", "Bharatpur",
-"Tiruvannamalai", "Barasat", "Jasdan", "Mettupalayam", "Karur","Electronic City", "Silk Board Junction", "Majestic Bangalore", "Yeshwanthpur", "BTM Layout", "Marathahalli", "Whitefield",
-"Kengeri", "Banashankari", "KR Puram", "Hebbagodi", "Attibele", "Bommasandra",
-"Miyapur", "Ameerpet", "Kukatpally", "LB Nagar", "Uppal", "Dilsukhnagar", "Gachibowli",
-"Shamshabad", "Kothapet", "JNTU Hyderabad", "Hitech City", "Madhapur",
-"Koyambedu Omni Bus Stand", "Tambaram", "Perungalathur", "Guindy", "T. Nagar", "Velachery", "Sholinganallur",
-"Siruseri", "Poonamallee", "Red Hills", "Chengalpattu",
-"Vashi", "Nerul", "Panvel", "Dombivli", "Bhiwandi", "Borivali West", "Andheri", "Kurla",
+"Tiruvannamalai", "Barasat", "Jasdan", "Mettupalayam", "Karur",
+"Tambaram", "Perungalathur", "Chengalpattu",
+"Panvel", "Dombivli", "Bhiwandi",
 "Aluva", "Angamaly", "Edappally", "Vyttila Mobility Hub", "Thripunithura",
 "Udupi", "Karkala", "Moodbidri", "Puttur", "Sullia",
 "Chitradurga", "Tumakuru", "Harihar", "Channarayapatna", "Mandya", "Hassan",
@@ -101,7 +101,8 @@ ENTITY_VALUES = {
 "SLG"
     ],
 
-    "DESTINATION_NAME": [
+    "DESTINATION_NAME": [ "Bangalore", "Mumbai", "Chennai", "Delhi", "Goa",
+    "bangalore", "mumbai", "chennai", "delhi", "goa",
        "Bangalore", "Bengaluru", "Mumbai", "Chennai", "Hyderabad", "Delhi", "Pune",
 "Kolkata", "Ahmedabad", "Jaipur", "Lucknow", "Mysore", "Mangalore", "Coimbatore",
 "Kochi", "Vizag", "Nagpur", "Indore", "Bhopal", "Chandigarh", "Goa",
@@ -140,17 +141,17 @@ ENTITY_VALUES = {
 "Rajkot", "Hadapsar", "Vadasery Omni Bus Stand", "Ghaziabad", "Berhampur (Orissa)", "Tambaram", "Palakollu",
 "Muramalla", "Alapuzha", "Bapunagar", "Bharatpur", "Balrampur", "Seoni, Madhya Pradesh", "Allahabad",
 "Phillaur city", "Darbhanga", "Kerala", "Mohali", "Purnia", "Jamakhandi", "McleodGanj",
-"Eluru", "Thinthani Bridge", "Kashmir", "Ringas", "Thiruchendur Murugan Temple", "Bhurkunda, Jharkhand", "Kasol",
+"Eluru", "Thinthani Bridge", "Kashmir", "Ringas", "Bhurkunda, Jharkhand", "Kasol",
 "Ayodhya", "Hubli", "Azamgarh", "North Goa", "Markapuram", "Kukke Subramanya", "Kollur",
 "Bhadohi", "Aranthangi", "Kakkattil", "Dindivanam", "Ongole", "New Delhi airport", "Digha, West Bengal",
 "Dharchula", "Raxaul", "Hosur", "Nagercoil", "Thindivanam", "Tiruchendur", "Guruvayoor",
 "Adoor", "Trichy", "Marwar Junction", "Raiganj", "Motihari", "Jhalander", "Thalassery","Kiul", "Ooty", 
 "Udhampur", "Kumbakonam", "Pushkar", "Bhusawal", "Chengannur",
-"Etawah", "Triambak", "Ramachandrapuram", "Pithapuram, Andhra Pradesh", "Shadnagar", "Tawang", "Edappally",
-"Electronic City", "Munne", "Gurdaspur", "Naliya", "Pashupatinath Mandir, Kathmandu", "Amarwara", "Gokarna",
+"Etawah", "Triambak", "Ramachandrapuram", "Pithapuram, Andhra Pradesh", "Shadnagar", "Tawang",
+"Munne", "Gurdaspur", "Naliya", "Pashupatinath Mandir, Kathmandu", "Amarwara", "Gokarna",
 "Ambalapuzha", "Hoshiarpur", "Urbania", "Thiruvannamalai", "Nizamabad", "Pathankot", "Kainchi Dham",
-"Kota", "Kuruchedu", "Savadatti", "Kanyakumari", "the Taj Mahal in Agra", "Sunghidi", "Pavoorchatram",
-"Veraval", "Rourkela", "Guindy", "Hanuman Junction", "Chittoor", "Kudremukh", "Surendranagar",
+"Kota", "Kuruchedu", "Savadatti", "Kanyakumari", "Sunghidi", "Pavoorchatram",
+"Veraval", "Rourkela", "Hanuman Junction", "Chittoor", "Kudremukh", "Surendranagar",
 "Madgaon, Goa", "Janjehil", "Samastipur", "Singarayapalem", "Bhikhi", "Haldwani", "Ratnagiri",
 "Dinapur Nizamat", "Barsar", "Salumbar", "Kharagpur", "Yengeri Bangalore", "Gudivada", "Alibaug",
 "Bijnor", "Pamuru", "Latur", "Munnar", "Manju Shree", "CTM, Ahmedabad", "Rishikesh",
@@ -168,7 +169,14 @@ ENTITY_VALUES = {
     # =========================
     "DEPARTURE_DATE": [
   "today", "tomorrow", "day after tomorrow", "this weekend", "next weekend", "next week", "monday",
-"tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "10 feb",
+"tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "10 feb","tommorrow", "tommorow", "tomorow", "tomorrw",
+"2day", "todya",
+"munday",
+"tusday", "teusday", "tuseday",
+"wednesdey", "wednsday", "wendsday",
+"thrsday", "thirsday", "thusday",
+"firday", "fridey", "fryday",
+"saterday", "saturdy", "satday",
 "12 february", "1st march", "15/02", "2026-02-15", "September 15, 2025", "27 September 2025", "January 7, 2026",
 "15th November 2025", "14th August", "January 29, 2026", "January 14th", "August 8", "26 February 2026", "January 23, 2026",
 "2025-10-17", "08-12-2025", "23rd January 2026", "2026-01-16", "18th October 2025", "28 December", "15 November 2025",
@@ -196,7 +204,9 @@ ENTITY_VALUES = {
     ],
 
     "ARRIVAL_DATE": [
-"today", "tomorrow", "day after tomorrow", "next day", "same day", "monday", "tuesday",
+"today", "tomorrow", "day after tomorrow", "next day", "same day", "monday", "tuesday","tomorow", "tomorrow",
+        "tommorrow", "tomorrow","tommorrow", "tommorow",
+"2day", "todya",
 "wednesday", "thursday", "friday", "saturday", "sunday", "10 feb", "12 february", "1st march",
 "15/02", "2026-02-15", "26 January 2026", "30 January 2026", "7 February 2026", "12 February 2026",
 "15 November 2025", "28 December", "29 December 2025", "January 15, 2026", "January 26, 2026",
@@ -218,15 +228,16 @@ ENTITY_VALUES = {
 "23:00", "7:00", "10 AM", "3:30 PM", "1:30 PM", "between 6 AM and 8 AM", "after 10 PM",
 "10:00 PM", "3 am", "4:00 AM", "7 PM", "8 am", "9 AM", "evening",
 "10:30 PM", "9:30", "1:30 AM", "4:55 AM", "after 5 am", "before 3 PM", "after 2 PM",
-"03:45 AM", "evening between 4:30 PM and 7:30 PM", "late at night", "5:02 PM"
+"03:45 AM", "evening between 4:30 PM and 7:30 PM", "late at night", "5:02 PM",
+"overnight", "dawn", "midnight", "early evening", "late evening"
     ],
 
 
 
     "ARRIVAL_TIME": [
- "by morning", "before noon", "after lunch", "early arrival", "late arrival", "by 6am", "before 10",
+ "by morning", "before noon", "early arrival", "late arrival", "by 6am", "before 10",
 "by morning", "before noon", "after lunch", "early arrival", "late arrival", "reach by 6am", "before 10",
-"before 1 PM", "Tuesday morning", "7:00 AM", "between 6:00 AM and 6:30 AM", "3:30 PM", "by 23rd evening", "10 hours",
+"before 1 PM", "7:00 AM", "between 6:00 AM and 6:30 AM", "3:30 PM", "10 hours",
 "before 6:00 am","reach early morning", "reach before morning", "in morning", "morning arrival", "reach by sunrise", "before sunrise", "at dawn",
 "reach before 8 am", "reach before 9 am", "reach before 10 am", "before 11 am", "arrive before 12 pm", "reach by noon", "arrive around noon",
 "arrive in afternoon", "reach after lunch", "reach by afternoon", "afternoon arrival", "arrive by 3 pm", "reach by 4 pm", "arrive before evening",
@@ -250,7 +261,19 @@ ENTITY_VALUES = {
 "Swargate", "Shivaji Nagar Pune", "Wakad", "Hinjewadi Phase 1", "Hinjewadi Phase 2", "Nigdi", "Chinchwad",
 "Pimpri", "Bhosari", "Katraj", "Hadapsar", "Aundh", "Viman Nagar", "Kharadi"       
 "Majestic", "Silk Board", "Electronic City","BTM LAYOUT","Whitefield", "Gachibowli",
-"Kukatpally", "Ameerpet", "Andheri", "Borivali", "Dadar", "majestic", "silk board",
+"Kukatpally", "Ameerpet", "Andheri", "Borivali", "Dadar", "majestic", "silk board","Majestik", "Mejastic",
+"Electronik City", "Electronic Cty", "Electonic City",
+"Silkboard", "Silk Bord", "Silkbord",
+"Marathhalli", "Marathalli", "Maratahalli",
+"White Field", "Whitefeild", "Whitfield",
+"Koramngala", "Kormangala",
+"Gachibowly", "Gachibouli",
+"Amirpet", "Amerpet",
+"Kukatpalli", "Kukatpaly", "Kukkatpally",
+"Koyambadu", "Koyamedu",
+"Daddar", "Dader", "Dadaar",
+"Borivali", "Borivli",
+"Andhri", "Andhery",
 "electronic city", "Silk Board Junction Bangalore", "Near Silk Board Bus Stop", "Opposite Silk Board Signal", "Electronic City Phase 1 Toll Gate", "Electronic City Phase Two Bus Stop", "Majestic Kempegowda Bus Station",
 "KR Puram Railway Station Main Road", "Hebbal Flyover Below Bridge", "Yelahanka New Town Circle", "Marathahalli Bridge Near Mall", "Gachibowli Flyover Below ORR", "Ameerpet Metro Station Gate 3", "LB Nagar Cross Road Bus Stop",
 "Borivali East Western Express Highway", "Andheri East Metro Station Gate No 2", "Bandra Kurla Complex Bus Bay", "Panvel McDonalds Highway Point", "Vytilla Mobility Hub Main Entrance", "Aluva Metro Station Parking Area", "Wagholi",
@@ -260,7 +283,7 @@ ENTITY_VALUES = {
 "Nashik Phata, Pimpri Chinchwad", "Vadasery Omni Bus Stand", "Jubilee Hills Station", "Esplanade", "Bangalore Tin Factory", "Chidambaram bus stand", "Tourist Point",
 "MG Road", "Lokmanya Tilak Terminus (LTT)", "Wakad", "Kavi Nagar", "Kalyan", "Meerut Bypass", "Mehandipur Balaji Mandir",
 "Kushaiguda bus station", "Palladi", "satellite bus station", "Karunamoyee", "Dhanbad Railway Station", "Ghatkopar bridge", "Krishnanagar ST Bus Stand",
-"Hyatt Nagar bus stand", "Nashik Road", "Netflix podi", "ITC Chola Chennai", "Gandipuram, Coimbatore", "NDPO bus stop", "flex",
+"Hyatt Nagar bus stand", "Nashik Road", "ITC Chola Chennai", "Gandipuram, Coimbatore", "NDPO bus stop",
 "Dadar Plaza", "SRM University Potheri", "Narshan Tekri", "Jubilee Hills bus stop", "ISBT Kashmiri Gate", "Baramunda Bus Terminal", "Ram Mandir",
 "US Bridge", "Secunderabad Regional Passport Office near Prashant Theatre", "Lalganj Ajhara", "Gandhipuram, Coimbatore", "Tribune Chowk, Chandigarh", "Karur bus stand", "Pari Chowk bus depot",
 "Koramangala, Bangalore", "Vellore New Bus Stand", "Thiruvanmiyur bus stand", "Inters Mart", "Maruthi Seva Nagar", "Ava Art Gallery, Uday Chand Road, Darjeeling", "Malkapur railway station",
@@ -272,6 +295,21 @@ ENTITY_VALUES = {
     ],
 
     "DROP_POINT": [
+         "Hawa Mahal", "India Gate", "Taj Mahal", "Red Fort",
+    "Gateway of India", "Charminar", "Qutub Minar","Dadar", "Daddar", "Dader", "Dadaar",
+"Hawa Mehal", "Hawamahal",
+"India Gat", "Indiagate",
+"Taj Mahal Road", "Tajmahal Road", "Taj Mahal Rd",
+"Red Fort", "Redfort", "RedFort",
+"Gateway of India", "Gatway of India",
+"Charminar", "Charmenar", "Charminaar",
+"Qutub Minar", "Qutb Minar", "Qutubminar",
+"Golden Templ", "Golden Temple",
+"Victoria Memorial", "Victoria Memrial",
+"Mysore Palace", "Mysore Palce",
+    "Golden Temple", "Victoria Memorial", "Mysore Palace",
+    "Ajmer Sharif", "Meenakshi Temple", "Lotus Temple",
+    "Taj Mahal Road", "India Gate Circle", "Red Fort area",
 "Borivali West Bus Depot", "Near Andheri West Metro Station", "Thane Teen Hath Naka Circle", "Panvel Railway Station East", "Chembur Diamond Garden Signal", "Yeshwanthpur Railway Station Back Gate", "BTM Layout Second Stage",
 "HSR Layout Sector Seven Bus Stop", "Koyambedu Omni Bus Stand Chennai", "Guindy Industrial Estate Main Road", "bus stand in Satna", "Borapani", "Basti", "Chennai airport",
 "The Ritz-Carlton, Goa", "CST Station", "Jayakondam Four Road", "VGP, Sholinganallur", "Hebbal Esteem Mall", "Sea Breeze Inn Calangute", "Perundurai",
@@ -291,16 +329,27 @@ ENTITY_VALUES = {
     # AC TYPE
     # =========================
     "AC_TYPE": [
-     "AC", "Non AC", "non-ac", "air conditioned", "airconditioned coach", "with ac", "without ac",
-"no ac bus", "full ac ", "non ac ", "3rd AC", "air conditioning", "air-conditioned",
-"First AC", "1st AC", "2nd AC", "3 Tier AC", "AC", "NON AC", "AC ", "AC", "AC",
+    "AC", "Non AC", "non-ac", "air conditioned", "airconditioned coach", "with ac", "without ac",
+    "no ac bus", "full ac", "non ac", "air conditioning", "air-conditioned",
+    "NON AC", "A C", "A/C","AC", "ac", "Ac",    
+    "Nonac", "Non A/C", "no ac",
+    "air condition", "airconditioning", "air-conditioning",
+    "airconditioned", "air conditoned",
+    "withac", "with a/c",
+    "withoutac", "without a/c",
     ],
 
     # =========================
     # BUS TYPE
     # =========================
     "BUS_TYPE": [
-       "Volvo", "Bharat Benz", "Scania", "Ashok Leyland", "Electric bus", "Mini bus", "Luxury bus",
+       "Volvo", "Volvoo", "Volvo",
+"Scaina", "Scaniya",
+"luxry bus", "luxuray", "luxary",
+"delux", "deluxee",
+"multiaxle", "multi-axle", "multi axel",
+"doubledecker", "double-decker", "dubble decker",
+"Bharat Benz", "Scania", "Ashok Leyland", "Electric bus", "Mini bus", "Luxury bus",
 "Multi axle", "Single axle", "Double axle", "Low floor bus",
 "High deck bus", "Coach bus", "Tourist bus", "Volvo Multi Axle", "Electric coach",
 "Mini coach", "Luxury coach", "Super luxury", "Deluxe", "Super deluxe", "Executive coach", "Air suspension bus",
@@ -321,7 +370,16 @@ ENTITY_VALUES = {
 "sleeper", "Seater", "seater", "Single", "single seat", "Double", "double berth",
 "Semi Sleeper", "semi sleeper", "semisleeper", "upper berth", "lower berth", "ladies seat", "single sleeper berth",
 "female seat", "Sleeper", "sleeper", "Seater", "seater", "Single", "single seat",
-"Double", "double berth", "Semi Sleeper", "semi sleeper", "semisleeper", "upper berth", "lower berth"
+"Double", "double berth", "Semi Sleeper", "semi sleeper", "semisleeper", "upper berth", "lower berth","sleper", "slepper", "slepr",
+"seeter", "seter", "seatr",
+"semisleeper", "semi-sleeper", "semisleepr", "semi sleepr", "semislepr",
+"singel", "singl",
+"dubble", "dobble", "doubl",
+"birth", "bereth",
+"uper berth", "upper birth",
+"lowr berth", "lower birth",
+"pushback", "push-back",
+"reclyner", "reclinr"
     ],
 
     # =========================
@@ -335,7 +393,21 @@ ENTITY_VALUES = {
 "blanket", "Blanket", "BLANKET", "bedsheet", "BedSheet", "bedSheet", "bedsheets", "BedSheets",
 "pillow", "Pillow", "pillows", "Pillows", "tv", "TV", "Tv", "entertainment", "Entertainment", "EntertainmentSystem",
 "toilet", "Toilet", "toilets", "Toilets", "washroom", "Washroom", "snacks", "Snacks",
-"reading lights", "Reading Lights", "ReadingLights", "usb charging", "USB Charging", "USBCharging"
+"reading lights", "Reading Lights", "ReadingLights", "usb charging", "USB Charging", "USBCharging","wify", "wi fi",
+"chargin point", "chargingpoint", "charging pont",
+"chargin points", "chargingpoints","lve tracking", "live trackin", "livetracking",
+"gps tracking", "gpstracking","priority boarding", "extra luggage", "meal", "snack box",
+"seat upgrade", "lounge access", "SMS alerts", "WhatsApp updates",
+"mobil charging", "mobile chargin",
+"waterbottle", "water bottel", "watter bottle",
+"blankit", "blancket", "blnket",
+"bed sheet", "bedsheat", "bed-sheet",
+"pillo", "pilow", "pilllow",
+"tolet", "toilett", "toylet",
+"wash room", "washrom", "washrrom",
+"reading lite", "readinglight",
+"usb chargin", "USB chargin",
+"snaks", "snack", "snacs"
     ],
 
     # =========================
@@ -343,7 +415,16 @@ ENTITY_VALUES = {
     # =========================
     "OPERATOR": [
       "Zingbus", "zingbus", "Hans Travels", "hans travels", "KSRTC", "ksrtc", "MSRTC",
-    "msrtc", "MHRTC", "mhrtc", "VRL", "SRS", "KPN", "Orange Travels",
+    "msrtc", "MHRTC", "mhrtc", "VRL", "SRS", "KPN", "Orange Travels","KSRCT",
+"VRL Travells", "VRL Travel",
+"SRS Travells", "SRS Travel",
+"RedBus", "Redbus", "Red Bus",
+"IntrCity", "Intracity", "Inter City",
+"Orange Travells", "Orrange Travels",
+"Kallada Travells", "Kalada Travels",
+"Greenlin", "Green Line",
+"Neeta Tours", "Nita Tours",
+"Hans Travells", "Hans Travel",
     "Kallada Travels", "Nagashree Travels", "Sri Amaravathi Travels", "INDO CANADIAN EXPRESS (Luxury Intercity Service)", "Skanda Travels", "V Bus Holidays", "Sri Renganathan Travels",
     "Laxmi holidays", "Mayurra Travels", "Dolphin tours and travels", "IRA TRANSPORTS", "KKT Travels", "TGSRTC", "RKT Tours and Travels",
     "Swamy Ayyappa Travels", "IntrCity SmartBus", "New Akash Travels", "JBS TRAVELS", "KISSAN TRAVELS PILANI", "AR & BCVR Travels", "AYYA TRAVELS",
@@ -365,7 +446,7 @@ ENTITY_VALUES = {
     "Mythri Tours And Travels", "SHRI RAM TRANSPORT COMPANY", "HANBAL HOLIDAYS", "Shyamoli Paribahan Pvt Ltd", "Kadamba Transport Corporation Limited (KTCL)", "PSR Travels Goa (Parrikar)", "Ravina Travels",
     "Haryana Roadways", "Shrinath Solitaire", "Jamna Travels-Jammu", "Sri Krishna Rath", "Laxmi holiday", "Shree Dattkrupa Travels", "SRI INDRAKEELADRI TRAVELS",
     "PRM Roadways", "Lokenath Bus Service", "Royal Travels", "Satluj Tour and Travels", "PRATAP T&C", "Metahills holidays", "NueGo",
-    "Priyam’s Amenity", "Sindh Travels", "MakeMyTrip", "Rithish Travels", "THAMARAI BUS TRANSPORTS", "Himachal Roadways", "FRESHBUS",
+    "Priyam's Amenity", "Sindh Travels", "Rithish Travels", "THAMARAI BUS TRANSPORTS", "Himachal Roadways", "FRESHBUS",
     "Tamil travels", "MRM Travels", "BLUE BIRDS TRAVELS", "Sudama Travels", "Shree Marudhar Travels", "Shubhdeep Motors Regd", "Go Tour Travels and Holidays",
     "Maharani Travels", "Raj Travels(EXPRESS)", "SBSTC-DURGAPUR-KARUNAMOYEE", "Samay Shatabdi Travels Pvt Ltd", "Mahasagar Travels", "National Travels", "SAT (Sri Anjaneya Travels)",
     "Manish Travels Private Limited", "SBSTC", "Shakmbhari Travels", "Maheswari Travels", "G Hyundai Travels", "Cauvery Travels", "Chandigarh Transport Undertaking (CTU)",
@@ -442,7 +523,7 @@ ENTITY_VALUES = {
     "SREE ADITHI TRAVELS", "YBM Travels", "Kallada Travels (Suresh Kallada)", "MRP Travels", "Punjuri Travels", "Easy Go Bus", "SAAM BUS",
     "TGSRTC Bus", "Pragathi Tourist Corporation", "Vaibhav Tours and Travels", "Vamika Travels", "Jai Jagdamb Travels", "Maa Durga Bus Service", "Kashi Vishwanath Tours and Travels",
     "KST Travels", "Garud Travels", "SOMDEV TRAVELS", "SG ARK TRAVELS PVT.LTD", "SK Balu Bus", "Khushal Travels", "Maharana Travels",
-    "SHREEJEE TRAVELS", "Momai Travels", "Make My Trip", "PP Travels", "New Uncle Travels", "SBM TRAANSPORT", "VSN Travels",
+    "SHREEJEE TRAVELS", "Momai Travels", "PP Travels", "New Uncle Travels", "SBM TRAANSPORT", "VSN Travels",
     "Om Sri Vinayaka Travels", "NEW HOLIDAY TRAVEL", "Royal Varma Travels", "Madhuram Travels", "Chandu Travels", "YBM Travels (BLM)", "Prayag Logistics Nagpur",
     "Jai Hanuman Travels", "Bharmani Travels Pvt Ltd.", "Swami travel", "Team Galaxy Tour Planer", "PVS Tours and Travels", "Tejas Maa Bhawani", "Shree Ashapura (Shree Hari) Travels",
     "Somnath travels", "Shreyas Travels", "Ravindra Tours and Travels", "BTR Travels", "SONIA LUXURY LINES", "Phoenix Roadlines", "Sky Travels",
@@ -482,9 +563,11 @@ ENTITY_VALUES = {
     # BUS FEATURES
     # =========================
     "BUS_FEATURES": [
-       "PRIMO", "primo", "live tracking", "gps tracking", "top rated", "highly rated", "best rated",
-"4 star bus", "5 star bus", "PRIME BUS",
-"Primo Bus",  "good rating"
+       "PRIMO", "primo",
+"4 star bus", "5 star bus",
+"Primo Bus","PRIME", "Pimo", "Prmo", "Primmo",
+"4 star", "4star", "4-star",
+"5 star", "5star", "5-star"
     ],
 
     # =========================
@@ -492,9 +575,11 @@ ENTITY_VALUES = {
     # =========================
     "DEALS": [
 "MY FREE TICKET", "MY_DEAL", "my deal", "GROUP_MY_DEAL", "group deal", "PINK_DEAL", "pink deal",
-"women deal", "RETURN_TRIP_DEAL", "return deal", "festival season discount", "free ticket", "Diwali holidays", "MY FREE TICKET",
+"women deal", "RETURN_TRIP_DEAL", "return deal", "festival season discount", "MY FREE TICKET",
 "MY_DEAL", "my deal", "GROUP_MY_DEAL", "group deal", "PINK_DEAL", "pink deal", "women deal",
-"RETURN_TRIP_DEAL", "return deal", "festival season discount"
+"RETURN_TRIP_DEAL", "return deal", "festival season discount","SUMMER_SALE", "MONSOON_DEAL", "WEEKEND_SPECIAL", "HOLIDAY_OFFER", 
+"LOYALTY_DEAL", "FLASH_SALE", "NEW_USER_DEAL", "BULK_BOOKING_DEAL",
+"student deal", "senior citizen deal"
     ],
 
     "COUPON_CODE" : [
@@ -522,8 +607,7 @@ ENTITY_VALUES = {
     "PRICE": [
       "200", "300", "500", "600", "750", "900", "1000",
 "1500", "2000", "3000", "5000", "9000", "20000", "10,000",
-"under 500", "under 1000", "under 2000", "below 3000", "above 2000", "above 5000",
-"budget", "low price", "below ₹1300", "below ₹2500",
+"under 500", "under 1000", "under 2000", "below 3000", "above 2000", "above 5000", "low price", "below ₹1300", "below ₹2500",
 "₹82", "₹100", "₹309", "₹399", "₹400", "₹499", "₹500",
 "₹700", "₹810", "₹900", "₹1000", "₹1100", "₹1300", "₹1351",
 "₹1400", "₹1500", "₹2000", "₹3000", "₹3150", "₹4000", "₹5000",
@@ -535,26 +619,47 @@ ENTITY_VALUES = {
     # SEMANTIC / INTENT
     # =========================
     "SEMANTIC": [
-"fastest", "slowest", "not late", "on time", "cheapest", "lowest price", "best bus","affordable"
-"recommended", "comfortable", "luxury", "safe for women", "best rated ", "most comfortable night bus", "safe",
-"reliable government bus", "fastest", "slowest", "not late", "on time", "cheapest", "lowest price",
-"best bus", "recommended", "comfortable", "luxury", "safe for women", "best rated ", "most comfortable",
-"safe bus", "reliable ", "best", "best cleanliness", "good quality", "good"
+    # Speed
+    "fast", "fastest", "quick", "quickest", "rapid", "express",
+    "slow", "slowest", "not late", "on time", "punctual", "direct",
+
+    # Price
+    "cheap", "cheapest", "lowest price", "affordable", "budget",
+    "economical", "best value", "expensive", "premium",
+
+    # Quality & Comfort
+    "clean", "cleanest", "hygienic", "well-maintained",
+    "comfortable", "most comfortable", "luxurious",
+    "safe", "safe for women", "reliable", "dependable",
+    "best", "best rated", "recommended", "good quality", "good",
+    "new bus", "modern", "spacious",
+    "best cleanliness", "best bus", "most comfortable night bus",
+    "reliable government bus", "safe bus",
+
+    # Misspellings
+    "fsat", "fastt", "fst", "fastes", "fastst",
+    "cheep", "chep", "chaep", "cheepest", "cheapst",
+    "comfortabel", "comfrtable", "confortable",
+    "cleen", "clen", "clena", "cleenest", "clenest",
+    "saf", "saef", "safee",
+    "reliabel", "reliabale", "relible",
+    "punctuel", "puntual", "puntcual",
+    "affordabel", "afforadable", "affordble",
+    "recomended", "recommanded", "reccommended",
+    "bst", "bestt", "bset",
     ],
 
     "TRAVELER": [
+"two tickets", "2tickets", "2 tickets", "3 tickets", "4 tickets", "5 tickets",
 "1 traveler", "2 travelers", "two travelers", "3 travelers", "4 travelers", "6 travelers", "7 travelers",
 "8 travelers", "9 travelers", "10 travelers", "11 passengers", "2 people", "8 people", "10 people",
 "11 people", "20 people", "2 adults", "four adults", "5 adults",
 "single adult passenger", "4 passengers", "2 passengers", "1 passenger", "3 females", "3 males", "7 boys",
 "30 ladies", "4 adult women", "8 persons", "2 persons", "4 persons", "12 persons", "5 members",
 "40 members", "26 passengers", "15 adults", "7 travelers (4 adults and 3 kids)", "2 adults and an infant"
-  "tickets for 2", "tickets for 3", "tickets for 4","group of 3", "group of 4", "group of 5", "group of 6","family of 3",
+"tickets for 2", "tickets for 3", "tickets for 4","group of 3", "group of 4", "group of 5", "group of 6","family of 3",
 "family of 4","seat for 2", "seat for 3", "seat for 4",
-"2 tickets", "3 tickets", "4 tickets", "5 tickets",
-"family of 5",
-"family of 6",  
-    
-    
+"2 tickets", "3 tickets", "4 tickets", "5 tickets", "two tickets"
+"family of 5","family of 6",  
     ]
 }

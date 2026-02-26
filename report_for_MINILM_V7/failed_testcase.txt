@@ -1,0 +1,65 @@
+1. "query":"Please confirm your booking for a bus from Shivamogga to Kodachadri on 03-10-2025 at 05:00 pm for 1 traveler."
+   templates:
+     196: "Book bus from {SOURCE_NAME} to {DESTINATION_NAME} for {TRAVELER} passengers",
+     622: "Book bus from {SOURCE_NAME} to {DESTINATION_NAME} for {TRAVELER}",
+     902: "Book bus from {SOURCE_NAME} to {DESTINATION_NAME} for {TRAVELER} passengers",
+     1328: "Book bus from {SOURCE_NAME} to {DESTINATION_NAME} for {TRAVELER}",
+     1527: "Can you book the ({OPERATOR}) from {SOURCE_NAME} to {DESTINATION_NAME} for {TRAVELER} on {DEPARTURE_DATE}",
+     2796: "Can you book the ({OPERATOR}) from {SOURCE_NAME} to {DESTINATION_NAME} for {TRAVELER} on {DEPARTURE_DATE}",
+     6284: "find {OPERATOR} bus options from {SOURCE_NAME} to {DESTINATION_NAME} on {DEPARTURE_DATE} for {TRAVELER}.",
+     13029: "Can you book the ({OPERATOR}) from {SOURCE_NAME} to {DESTINATION_NAME} for {TRAVELER} on {DEPARTURE_DATE}",
+
+2. "query":"show me buses from mumbai to delhi tomorrow morning"
+   templates:
+     2424: "show me {DEPARTURE_DATE} {DEPARTURE_TIME} buses from {SOURCE_NAME} to {DESTINATION_NAME}",
+     2153: "show buses from {SOURCE_NAME} to {DESTINATION_NAME} {DEPARTURE_DATE} {DEPARTURE_TIME} arrive {ARRIVAL_DATE} {ARRIVAL_TIME} below {PRICE}",
+     
+3. "query":"Please confirm two sleeper tickets for my round trip from Goa to Mumbai on 16th November 2025 with return on 19th November 2025."
+   templates:
+     3072: "add {DROP_POINT} as a stop for my onward journey from {SOURCE_NAME} to {DESTINATION_NAME} on {DEPARTURE_DATE}, with a return on {DEPARTURE_DATE}.",
+     3307: "book a bus for {PRICE} people from {SOURCE_NAME} to {DESTINATION_NAME}, with pickup on {DEPARTURE_DATE}, and return on {DEPARTURE_DATE}.",
+     3308: "book a bus for 50 people from {PICKUP_POINT} to {DESTINATION_NAME}, with pickup on {DEPARTURE_DATE} at {DEPARTURE_TIME} and return on {DEPARTURE_DATE}.",
+     3676: "book a return bus from {SOURCE_NAME} to {DESTINATION_NAME}, departing on {DEPARTURE_DATE} and returning on {DEPARTURE_DATE}.",
+     10190: "I need to travel from {SOURCE_NAME} to {DESTINATION_NAME} on {DEPARTURE_DATE} and return on {DEPARTURE_DATE}.",
+
+4. "query": "I am looking for a bus from Ramachandrapuram to Katpadi Vellore on 13th October. Please provide me with the best options available."
+   templates:
+     207: "I need a {SEMANTIC} bus from {SOURCE_NAME} to {DESTINATION_NAME}",
+     208: "Find {SEMANTIC} option from {SOURCE_NAME} to {DESTINATION_NAME}",
+     209: "Show {SEMANTIC} buses from {SOURCE_NAME} to {DESTINATION_NAME}",
+     "show buses from {SOURCE_NAME} to {DESTINATION_NAME}, prefer {SEMANTIC} bus with {AMENITIES}",
+     699:"I want to travel from {SOURCE_NAME} to {DESTINATION_NAME} on {DEPARTURE_DATE}, prefer {SEMANTIC} and {SEMANTIC} bus",
+     631: "Show me {SEMANTIC} buses from {SOURCE_NAME} to {DESTINATION_NAME}",
+     684: "Show {SEMANTIC} {OPERATOR} {AC_TYPE} {SEAT_TYPE} buses from {SOURCE_NAME} to {DESTINATION_NAME} with {BUS_FEATURES}, pickup {PICKUP_POINT}, drop {DROP_POINT}, budget {PRICE}",
+     913: "I need a {SEMANTIC} bus from {SOURCE_NAME} to {DESTINATION_NAME}",
+     914: "Find {SEMANTIC} option from {SOURCE_NAME} to {DESTINATION_NAME}",
+     915: "Show {SEMANTIC} buses from {SOURCE_NAME} to {DESTINATION_NAME}",
+     1337: "Show me {SEMANTIC} buses from {SOURCE_NAME} to {DESTINATION_NAME}",
+     1390: "Show {SEMANTIC} {OPERATOR} {AC_TYPE} {SEAT_TYPE} buses from {SOURCE_NAME} to {DESTINATION_NAME} with {BUS_FEATURES}, pickup {PICKUP_POINT}, drop {DROP_POINT}, budget {PRICE}",
+     1830: "Show {SEMANTIC} buses from {SOURCE_NAME} to {DESTINATION_NAME} arriving on {ARRIVAL_DATE}",
+
+5. "query": "I want to apply the coupon code APSRTC for my journey with APSRTC Bus from Ongole to Hyderabad."
+   Failing entity: COUPON_CODE (not detected)
+   templates:
+     603: "I want to apply {COUPON_CODE} for {SOURCE_NAME} to {DESTINATION_NAME} route",
+     1309: "I want to apply {COUPON_CODE} for {SOURCE_NAME} to {DESTINATION_NAME} route",
+     2722: "I want to apply {COUPON_CODE} for {SOURCE_NAME} to {DESTINATION_NAME} route",
+     451: "bus from {SOURCE_NAME} to {DESTINATION_NAME} coupon {COUPON_CODE}",
+     452: "apply {COUPON_CODE} for bus from {SOURCE_NAME} to {DESTINATION_NAME}",
+     1157: "bus from {SOURCE_NAME} to {DESTINATION_NAME} coupon {COUPON_CODE}",
+     1158: "apply {COUPON_CODE} for bus from {SOURCE_NAME} to {DESTINATION_NAME}",
+     1531: "I would like to book ({OPERATOR}) from {SOURCE_NAME} to {DESTINATION_NAME} on {DEPARTURE_DATE}, apply {COUPON_CODE}",
+     1558: "I would like ({OPERATOR}) from {SOURCE_NAME} to {DESTINATION_NAME} on {DEPARTURE_DATE}, apply coupon {COUPON_CODE}",
+     3159: "are there any available {COUPON_CODE} for the bus journey with {OPERATOR} from {SOURCE_NAME} to {DESTINATION_NAME}?",
+     4907: "can you provide information about the {COUPON_CODE} for the journey with {OPERATOR} bus from {SOURCE_NAME} to {DESTINATION_NAME}?",
+     4989: "can you provide me with a coupon code for the journey with {OPERATOR} bus from {SOURCE_NAME} to {DESTINATION_NAME}?",
+     5567: "can you recommend a {COUPON_CODE} for purchasing the ticket for the journey with {OPERATOR} bus from {SOURCE_NAME} to {DESTINATION_NAME}?",
+
+
+ 6. "text": "book MEGABUS Multi axle from Poona to Ongole", 
+    due to MEGABUS is a operator model leanred it 
+    and failed to identify then the coupon code MEGABUS 
+    "Book {SOURCE_CITY_CODE} to {DESTINATION_CITY_CODE} bus with coupon {COUPON_CODE}",
+    "Book {AC_TYPE} bus from {SOURCE_NAME} to {DESTINATION_NAME} with coupon {COUPON_CODE}",
+    "bus from {SOURCE_NAME} to {DESTINATION_NAME} coupon {COUPON_CODE}",
+

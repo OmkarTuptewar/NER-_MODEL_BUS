@@ -1,9 +1,12 @@
 
 import json
 import argparse
+import os
+import json
 import numpy as np
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
+from dotenv import load_dotenv
 
 import torch
 from datasets import Dataset
@@ -20,10 +23,43 @@ from constants.entity_labels import ENTITY_LABELS
 
 
 
-# CONFIGURATION
+load_dotenv()
 
 
-MODEL_NAME = "microsoft/MiniLM-L12-H384-uncased"
+# =============================================================================
+# CONFIGURATION - Load from Environment Variables
+# =============================================================================
+
+# Model Configuration
+MODEL_NAME = os.getenv("BUS_NER_BASE_MODEL", "microsoft/deberta-v3-small")
+MAX_LENGTH = int(os.getenv("BUS_NER_MAX_LENGTH", "128"))
+
+# Paths
+DEFAULT_DATA_PATH = os.getenv("BUS_NER_DATA_PATH", "data/training_data_bio.json")
+DEFAULT_OUTPUT_PATH = os.getenv("BUS_NER_OUTPUT_DIR", "models/bus_ner_deberta_v3_small_3.0")
+
+# Core Training Hyperparameters
+DEFAULT_EPOCHS = int(os.getenv("BUS_NER_EPOCHS", "5"))
+DEFAULT_BATCH_SIZE = int(os.getenv("BUS_NER_BATCH_SIZE", "16"))
+DEFAULT_LEARNING_RATE = float(os.getenv("BUS_NER_LEARNING_RATE", "5e-5"))
+DEFAULT_SEED = int(os.getenv("BUS_NER_SEED", "42"))
+
+# Advanced Training Settings
+DEFAULT_WARMUP_RATIO = float(os.getenv("BUS_NER_WARMUP_RATIO", "0.05"))
+DEFAULT_WEIGHT_DECAY = float(os.getenv("BUS_NER_WEIGHT_DECAY", "0.02"))
+DEFAULT_MAX_GRAD_NORM = float(os.getenv("BUS_NER_MAX_GRAD_NORM", "1.0"))
+DEFAULT_LR_SCHEDULER_TYPE = os.getenv("BUS_NER_LR_SCHEDULER_TYPE", "linear")
+
+# Evaluation and Checkpointing
+DEFAULT_EVAL_STRATEGY = os.getenv("BUS_NER_EVAL_STRATEGY", "epoch")
+DEFAULT_SAVE_STRATEGY = os.getenv("BUS_NER_SAVE_STRATEGY", "epoch")
+DEFAULT_SAVE_TOTAL_LIMIT = int(os.getenv("BUS_NER_SAVE_TOTAL_LIMIT", "2"))
+DEFAULT_EARLY_STOPPING_PATIENCE = int(os.getenv("BUS_NER_EARLY_STOPPING_PATIENCE", "3"))
+DEFAULT_METRIC_FOR_BEST_MODEL = os.getenv("BUS_NER_METRIC_FOR_BEST_MODEL", "f1")
+
+# Performance Settings
+DEFAULT_DATALOADER_NUM_WORKERS = int(os.getenv("BUS_NER_DATALOADER_NUM_WORKERS", "4"))
+DEFAULT_LOGGING_STEPS = int(os.getenv("BUS_NER_LOGGING_STEPS", "100"))
 
 
 
@@ -112,7 +148,7 @@ def tokenize_and_align_labels(
     examples: Dict[str, List],
     tokenizer: AutoTokenizer,
     label2id: Dict[str, int],
-    max_length: int = 128
+    max_length: int = MAX_LENGTH
 ) -> Dict[str, List]:
     
     tokenized_inputs = tokenizer(
@@ -197,7 +233,8 @@ def create_model(
     model_name: str,
     num_labels: int,
     label2id: Dict[str, int],
-    id2label: Dict[int, str]
+    id2label: Dict[int, str],
+    resume_from: str = None
 ) -> AutoModelForTokenClassification:
     """
     Create a token classification model.
@@ -207,20 +244,33 @@ def create_model(
         num_labels: Number of NER labels
         label2id: Label to ID mapping
         id2label: ID to label mapping
+         resume_from: Path to existing model to continue training from
     
     Returns:
         Token classification model
     """
-    model = AutoModelForTokenClassification.from_pretrained(
-        model_name,
-        num_labels=num_labels,
-        label2id=label2id,
-        id2label=id2label,
-    )
     
-    print(f"Loaded model: {model_name}")
+    if resume_from and Path(resume_from).exists():  
+            # Load existing trained model
+            print(f"Resuming training from: {resume_from}")
+            model = AutoModelForTokenClassification.from_pretrained(
+                resume_from,
+                num_labels=num_labels,
+                label2id=label2id,
+                id2label=id2label,
+            )
+            print(f"Loaded existing model from: {resume_from}")
+    else:
+            # Create new model from base
+            model = AutoModelForTokenClassification.from_pretrained(
+                model_name,
+                num_labels=num_labels,
+                label2id=label2id,
+                id2label=id2label,
+            )
+            print(f"Created new model from: {model_name}")
+        
     print(f"Number of labels: {num_labels}")
-    
     return model
 
 
@@ -234,62 +284,66 @@ def train_model(
     train_dataset: Dataset,
     eval_dataset: Dataset,
     output_dir: str,
-    n_epochs: int = 10,
-    batch_size: int = 16,
-    learning_rate: float = 5e-5,
+    n_epochs: int = DEFAULT_EPOCHS,
+    batch_size: int = DEFAULT_BATCH_SIZE,
+    learning_rate: float = DEFAULT_LEARNING_RATE,
     id2label: Dict[int, str] = None,
 ) -> Trainer:
     """
-    Train the NER model using Hugging Face Trainer.
+    Train the NER model with configurable hyperparameters from environment variables.
     
     Args:
-        model: Token classification model
-        tokenizer: Tokenizer
+        model: Pre-trained model to fine-tune
+        tokenizer: Tokenizer for the model
         train_dataset: Training dataset
         eval_dataset: Evaluation dataset
-        output_dir: Directory to save checkpoints
-        n_epochs: Number of training epochs
-        batch_size: Training batch size
-        learning_rate: Learning rate
-        id2label: ID to label mapping for metrics
+        output_dir: Directory to save model checkpoints
+        n_epochs: Number of training epochs (default from env: BUS_NER_EPOCHS)
+        batch_size: Training batch size (default from env: BUS_NER_BATCH_SIZE)
+        learning_rate: Learning rate (default from env: BUS_NER_LEARNING_RATE)
+        id2label: Label ID to label name mapping
     
     Returns:
-        Trained Trainer instance
+        Trained Trainer object
     """
-    print("\n" + "=" * 60)
-    print("TRAINING NER MODEL")
-    print("=" * 60)
-    print(f"Model: {MODEL_NAME}")
-    print(f"Epochs: {n_epochs}")
-    print(f"Batch size: {batch_size}")
-    print(f"Learning rate: {learning_rate}")
-    print(f"Train samples: {len(train_dataset)}")
-    print(f"Eval samples: {len(eval_dataset)}")
-    print("=" * 60 + "\n")
-    
-    # Training arguments
     training_args = TrainingArguments(
         output_dir=output_dir,
+        
+        # Core training parameters
         num_train_epochs=n_epochs,
         per_device_train_batch_size=batch_size,
         per_device_eval_batch_size=batch_size,
         learning_rate=learning_rate,
-        weight_decay=0.01,
-        eval_strategy="epoch",
-        save_strategy="epoch",
+        
+        # Advanced training settings (from env)
+        warmup_ratio=DEFAULT_WARMUP_RATIO,
+        max_grad_norm=DEFAULT_MAX_GRAD_NORM,
+        lr_scheduler_type=DEFAULT_LR_SCHEDULER_TYPE,
+        weight_decay=DEFAULT_WEIGHT_DECAY,
+        
+        # Performance optimization
+        fp16=torch.cuda.is_available(),
+        dataloader_num_workers=DEFAULT_DATALOADER_NUM_WORKERS,
+        
+        # Checkpointing and evaluation
+        eval_strategy=DEFAULT_EVAL_STRATEGY,
+        save_strategy=DEFAULT_SAVE_STRATEGY,
+        save_total_limit=DEFAULT_SAVE_TOTAL_LIMIT,
         load_best_model_at_end=True,
-        metric_for_best_model="f1",
+        metric_for_best_model=DEFAULT_METRIC_FOR_BEST_MODEL,
         greater_is_better=True,
+        
+        # Logging
         logging_dir=f"{output_dir}/logs",
-        logging_steps=100,
-        save_total_limit=2,
-        report_to="none",  # Disable wandb/tensorboard
+        logging_steps=DEFAULT_LOGGING_STEPS,
+        report_to="none",
     )
     
-    # Data collator
+    # Add early stopping callback
+    from transformers import EarlyStoppingCallback
+
     data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer)
-    
-    # Create trainer
+
     trainer = Trainer(
         model=model,
         args=training_args,
@@ -298,17 +352,11 @@ def train_model(
         tokenizer=tokenizer,
         data_collator=data_collator,
         compute_metrics=lambda p: compute_metrics(p, id2label),
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=DEFAULT_EARLY_STOPPING_PATIENCE)],
     )
-    
-    # Train
-    trainer.train()
-    
-    print("\n" + "=" * 60)
-    print("TRAINING COMPLETE")
-    print("=" * 60)
-    
-    return trainer
 
+    trainer.train()
+    return trainer
 
 # =============================================================================
 # MODEL SAVING
@@ -393,6 +441,7 @@ def quick_evaluation(
             is_split_into_words=True,
             return_tensors="pt",
             truncation=True,
+            max_length=MAX_LENGTH,
             padding=True
         )
         inputs = {k: v.to(device) for k, v in inputs.items()}
@@ -428,6 +477,22 @@ def quick_evaluation(
 
 
 # =============================================================================
+# ENV HELPERS
+# =============================================================================
+
+def _resolve_env_path(env_value: str, default_path: Path, base_dir: Path) -> str:
+    """
+    Resolve an env path. If relative, treat as relative to project base_dir.
+    """
+    if env_value:
+        candidate = Path(env_value)
+        if not candidate.is_absolute():
+            candidate = base_dir / candidate
+        return str(candidate)
+    return str(default_path)
+
+
+# =============================================================================
 # MAIN
 # =============================================================================
 
@@ -437,38 +502,44 @@ def main():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=10,
-        help="Number of training epochs (default: 10)"
+        default=DEFAULT_EPOCHS,
+        help=f"Number of training epochs (default: {DEFAULT_EPOCHS} from env)"
     )
     parser.add_argument(
         "--data",
         type=str,
-        default=None,
-        help="Path to BIO training data JSON"
+        default=DEFAULT_DATA_PATH,
+        help=f"Path to BIO training data JSON (default: {DEFAULT_DATA_PATH} from env)"
     )
     parser.add_argument(
         "--output",
         type=str,
+        default=DEFAULT_OUTPUT_PATH,
+        help=f"Output directory for model (default: {DEFAULT_OUTPUT_PATH} from env)"
+    )
+    parser.add_argument(
+        "--resume",
+        type=str,
         default=None,
-        help="Path to save trained model"
+        help="Path to existing model to continue training from"
     )
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=16,
-        help="Training batch size (default: 16)"
+        default=DEFAULT_BATCH_SIZE,
+        help=f"Training batch size (default: {DEFAULT_BATCH_SIZE} from env)"
     )
     parser.add_argument(
         "--learning-rate",
         type=float,
-        default=5e-5,
-        help="Learning rate (default: 5e-5)"
+        default=DEFAULT_LEARNING_RATE,
+        help=f"Learning rate (default: {DEFAULT_LEARNING_RATE} from env)"
     )
     parser.add_argument(
         "--seed",
         type=int,
-        default=42,
-        help="Random seed for reproducibility"
+        default=DEFAULT_SEED,
+        help=f"Random seed (default: {DEFAULT_SEED} from env)"
     )
     
     args = parser.parse_args()
@@ -477,10 +548,19 @@ def main():
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
     
-    # Determine paths
+    # Determine paths (use args values directly as they now have env defaults)
     base_dir = Path(__file__).parent.parent
-    data_path = args.data or str(base_dir / "data" / "training_data_bio.json")
-    output_path = args.output or str(base_dir / "models" / "bus_ner_transformerV2")
+   # NEW (use the _resolve_env_path function):
+    data_path = _resolve_env_path(
+        args.data,
+        base_dir / "data" / "training_data_bio.json",
+        base_dir
+    )
+    output_path = _resolve_env_path(
+        args.output,
+        base_dir / "models" / "bus_ner_deberta_v3_small_3.0",
+        base_dir
+    )
     
     print("=" * 60)
     print("BUS NER TRAINING PIPELINE (Transformers)")
@@ -519,7 +599,7 @@ def main():
     
     # Step 4: Create model
     print("\n[Step 4/5] Creating model...")
-    model = create_model(MODEL_NAME, num_labels, label2id, id2label)
+    model = create_model(MODEL_NAME, num_labels, label2id, id2label,resume_from=args.resume)
     
     # Step 5: Train
     print("\n[Step 5/5] Training model...")

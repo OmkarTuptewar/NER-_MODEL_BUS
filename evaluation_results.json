@@ -1,0 +1,2295 @@
+{
+  "model_path": "models/bus_ner_minilm_v7_patched",
+  "eval_data_path": "data/evaluation_data_bio.json",
+  "num_samples": 100,
+  "num_failures": 77,
+  "overall": {
+    "precision": 0.5895061728395061,
+    "recall": 0.6797153024911032,
+    "f1": 0.6314049586776859,
+    "tp": 191,
+    "fp": 133,
+    "fn": 90
+  },
+  "per_entity": {
+    "DESTINATION_NAME": {
+      "precision": 0.5054945054945055,
+      "recall": 0.5054945054945055,
+      "f1": 0.5054945054945055,
+      "support": 91,
+      "tp": 46,
+      "fp": 45,
+      "fn": 45
+    },
+    "OPERATOR": {
+      "precision": 0.573170731707317,
+      "recall": 0.5875,
+      "f1": 0.5802469135802469,
+      "support": 80,
+      "tp": 47,
+      "fp": 35,
+      "fn": 33
+    },
+    "SEMANTIC": {
+      "precision": 0.5714285714285714,
+      "recall": 0.6666666666666666,
+      "f1": 0.6153846153846153,
+      "support": 6,
+      "tp": 4,
+      "fp": 3,
+      "fn": 2
+    },
+    "DEPARTURE_DATE": {
+      "precision": 0.7142857142857143,
+      "recall": 0.8333333333333334,
+      "f1": 0.7692307692307692,
+      "support": 6,
+      "tp": 5,
+      "fp": 2,
+      "fn": 1
+    },
+    "SEAT_TYPE": {
+      "precision": 0.8,
+      "recall": 0.8,
+      "f1": 0.8000000000000002,
+      "support": 5,
+      "tp": 4,
+      "fp": 1,
+      "fn": 1
+    },
+    "SOURCE_NAME": {
+      "precision": 0.9111111111111111,
+      "recall": 0.9111111111111111,
+      "f1": 0.9111111111111111,
+      "support": 90,
+      "tp": 82,
+      "fp": 8,
+      "fn": 8
+    },
+    "DEPARTURE_TIME": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "AC_TYPE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 2,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+    }
+  },
+  "test_case_failures": [
+    {
+      "test_id": 1,
+      "query": "What is the cancellation policy for the Journey with National travels and logistics bus from Bangalore to Payyanur ?",
+      "failures": {
+        "missing": {
+          "SOURCE_NAME": [
+            "Bangalore to"
+          ],
+          "DESTINATION_NAME": [
+            "Payyanur ?"
+          ],
+          "OPERATOR": [
+            "National travels and logistics bus from"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "SOURCE_NAME": [
+            "Bangalore"
+          ],
+          "DESTINATION_NAME": [
+            "Payyanur"
+          ],
+          "OPERATOR": [
+            "National travels and logistics"
+          ]
+        },
+        "correct": {}
+      },
+      "tp": 0,
+      "fp": 4,
+      "fn": 3
+    },
+    {
+      "test_id": 2,
+      "query": "What is TripAssured for bus ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "TripAssured"
+          ]
+        },
+        "correct": {}
+      },
+      "tp": 0,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 3,
+      "query": "What is the cancellation policy for the Journey with Kalpaka Travels Bus from Bangalore to Payyanur ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Bangalore"
+          ],
+          "DESTINATION_NAME": [
+            "Payyanur"
+          ],
+          "OPERATOR": [
+            "Kalpaka Travels"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 4,
+      "query": "When will I receive the driver details for the Journey with FlixBus from Lucknow to Jaipur ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Jaipur ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Jaipur"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Lucknow"
+          ],
+          "OPERATOR": [
+            "FlixBus"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 5,
+      "query": "I want to know about day buses for the journey with TGSRTC Bus from Hyderabad to Srisailam .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Srisailam ."
+          ],
+          "OPERATOR": [
+            "TGSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Srisailam"
+          ],
+          "OPERATOR": [
+            "TGSRTC"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 6,
+      "query": "What is the problem with the Journey with VEERA & SRI KALESWARI TRAVELS bus from Anantapur ( Andhra Pradesh ) to Vijayawada ?",
+      "failures": {
+        "missing": {
+          "SOURCE_NAME": [
+            "Anantapur ( Andhra Pradesh )"
+          ]
+        },
+        "incorrect": {
+          "SOURCE_NAME": [
+            "Anantapur Andhra Pradesh"
+          ]
+        },
+        "correct": {
+          "DESTINATION_NAME": [
+            "Vijayawada"
+          ],
+          "OPERATOR": [
+            "VEERA & SRI KALESWARI TRAVELS"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 7,
+      "query": "What is the cancellation policy for the Journey with Laxmi holidays bus from Delhi to Indore ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "DESTINATION_NAME": [
+            "Indore"
+          ],
+          "OPERATOR": [
+            "Laxmi holidays"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 8,
+      "query": "What is the cancellation policy for the Journey with Maharani Travels Bus from Delhi to Jaipur ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Jaipur ?"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Jaipur"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "OPERATOR": [
+            "Maharani Travels"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 9,
+      "query": "Will I be traveling alone in the seat I booked on the Journey with Raj Kalpana Travels Pvt . ltd bus from Morena to Delhi ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Delhi ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Delhi"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Morena"
+          ],
+          "OPERATOR": [
+            "Raj Kalpana Travels Pvt . ltd"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 11,
+      "query": "When will I receive the driver details for the Journey with Supreme Holidays bus from Mumbai to Mahabaleshwar ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Mahabaleshwar ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Mahabaleshwar"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Mumbai"
+          ],
+          "OPERATOR": [
+            "Supreme Holidays"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 12,
+      "query": "Is an Aadhar card accepted as proof for senior citizen concession on the Journey with Chandigarh Transport Undertaking ( CTU ) bus from Delhi to Chandigarh ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "Chandigarh Transport Undertaking ( CTU )"
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "Chandigarh Transport Undertaking CTU bus"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "DESTINATION_NAME": [
+            "Chandigarh"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 13,
+      "query": "What government ID is required to obtain senior citizen concession on Chandigarh Transport Undertaking buses ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "Chandigarh Transport Undertaking buses"
+          ]
+        },
+        "incorrect": {
+          "TRAVELER": [
+            "senior citizen"
+          ],
+          "OPERATOR": [
+            "Chandigarh Transport Undertaking"
+          ]
+        },
+        "correct": {}
+      },
+      "tp": 0,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 14,
+      "query": "What is the cancellation policy for the Journey with Ravina Travels ( Regd ) bus from Dehradun to Bangalore ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Bangalore ?"
+          ],
+          "OPERATOR": [
+            "Ravina Travels ( Regd )"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Bangalore"
+          ],
+          "OPERATOR": [
+            "Ravina Travels Regd"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Dehradun"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 2
+    },
+    {
+      "test_id": 15,
+      "query": "I want to know about the cancellation policy for the bus from Dehradun to Bangalore .",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Dehradun"
+          ],
+          "DESTINATION_NAME": [
+            "Bangalore"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 16,
+      "query": "What offers are available for the Journey with Sri Sanvi Tours and Travels bus from Hyderabad to Tenali ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Tenali ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Tenali"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ],
+          "OPERATOR": [
+            "Sri Sanvi Tours and Travels"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 17,
+      "query": "What are the applicable offers right now for the Journey with Sri Sanvi Tours and Travels bus from Hyderabad to Tenali ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Tenali ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Tenali"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ],
+          "OPERATOR": [
+            "Sri Sanvi Tours and Travels"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 18,
+      "query": "When will I receive the driver details for the Journey with RSRTC Bus from Sikar to Bikaner ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Bikaner ?"
+          ],
+          "OPERATOR": [
+            "RSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Bikaner"
+          ],
+          "OPERATOR": [
+            "RSRTC"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Sikar"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 19,
+      "query": "What is the rating for KGN Tours and Travels bus service from Mumbai to Hyderabad ?",
+      "failures": {
+        "missing": {
+          "SOURCE_NAME": [
+            "from Mumbai"
+          ],
+          "DESTINATION_NAME": [
+            "to Hyderabad"
+          ]
+        },
+        "incorrect": {
+          "SOURCE_NAME": [
+            "Mumbai"
+          ],
+          "DESTINATION_NAME": [
+            "Hyderabad"
+          ]
+        },
+        "correct": {
+          "OPERATOR": [
+            "KGN Tours and Travels"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 20,
+      "query": "How can I use my free ticket for the Journey with Jabbar Travels bus from Hyderabad to Bangalore ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Bangalore ?"
+          ]
+        },
+        "incorrect": {
+          "DEALS": [
+            "my free ticket"
+          ],
+          "DESTINATION_NAME": [
+            "Bangalore"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ],
+          "OPERATOR": [
+            "Jabbar Travels"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 24,
+      "query": "What is the cancellation policy for the Journey with UPSRTC Bus from Bareilly to Lucknow ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Lucknow ?"
+          ],
+          "OPERATOR": [
+            "UPSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Lucknow"
+          ],
+          "OPERATOR": [
+            "UPSRTC"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Bareilly"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 2
+    },
+    {
+      "test_id": 25,
+      "query": "What is the cancellation policy for the Journey with Raj Kalpana Travels Pvt . ltd bus from Agra to Delhi ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Agra"
+          ],
+          "DESTINATION_NAME": [
+            "Delhi"
+          ],
+          "OPERATOR": [
+            "Raj Kalpana Travels Pvt . ltd"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 27,
+      "query": "Can you clarify why the booking process indicates it ' s for ladies only when the image shows a male ? I ' m concerned about the seating arrangements for my journey from Hyderabad to Eluru .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Eluru ."
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Eluru"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 29,
+      "query": "Please share the link to the seat map for my ASBR Travels bus booking from Hyderabad to Eluru .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Eluru ."
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Eluru"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ],
+          "OPERATOR": [
+            "ASBR Travels"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 30,
+      "query": "What are the best coupon codes available for the Journey with Mozo travels bus from Hyderabad to Visakhapatnam ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Visakhapatnam ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Visakhapatnam"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ],
+          "OPERATOR": [
+            "Mozo travels"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 31,
+      "query": "I want to know more about the bus journey from Varanasi to Delhi with OurBus India Limited .",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "OurBus India Limited ."
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "OurBus India Limited"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Varanasi"
+          ],
+          "DESTINATION_NAME": [
+            "Delhi"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 32,
+      "query": "When will I receive the driver details for the Journey with RSRTC Bus from Jaipur to Udaipur ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Udaipur ?"
+          ],
+          "OPERATOR": [
+            "RSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Udaipur"
+          ],
+          "OPERATOR": [
+            "RSRTC"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Jaipur"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 33,
+      "query": "Please arrange a call with an executive regarding the Journey with IntrCity SmartBus from Hyderabad to Bangalore .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Bangalore ."
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Bangalore"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ],
+          "OPERATOR": [
+            "IntrCity SmartBus"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 35,
+      "query": "Will the ticket for the Journey with Bhakti World Travels Intercity Bus from Udgir to Pune be free this time as well ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "Bhakti World Travels Intercity Bus"
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "Bhakti World Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Udgir"
+          ],
+          "DESTINATION_NAME": [
+            "Pune"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 36,
+      "query": "When will I get the driver details for the Journey with IntrCity SmartBus from Delhi to Jalandhar ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Jalandhar ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Jalandhar"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "OPERATOR": [
+            "IntrCity SmartBus"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 37,
+      "query": "Is the journey with Bhagwati Travel Agency bus from Delhi to Khatushyamji available for women , specifically for my mother ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "Bhagwati Travel Agency"
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "journey with Bhagwati Travel Agency"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "DESTINATION_NAME": [
+            "Khatushyamji"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 38,
+      "query": "What is the cancellation policy for the Journey with Auodumbar Tours and Travels bus from Pune to Ratnagiri ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Pune"
+          ],
+          "DESTINATION_NAME": [
+            "Ratnagiri"
+          ],
+          "OPERATOR": [
+            "Auodumbar Tours and Travels"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 40,
+      "query": "Can you show me the quality of the Journey with UPSRTC Bus from Haridwar to Delhi ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "UPSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "UPSRTC"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Haridwar"
+          ],
+          "DESTINATION_NAME": [
+            "Delhi"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 43,
+      "query": "Is there a free ticket available for the Journey with KBS Luxury Bus from Bangalore to Chennai ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "KBS Luxury Bus"
+          ]
+        },
+        "incorrect": {
+          "DEALS": [
+            "free ticket"
+          ],
+          "OPERATOR": [
+            "KBS Luxury"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Bangalore"
+          ],
+          "DESTINATION_NAME": [
+            "Chennai"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 44,
+      "query": "What is the cancellation policy for the Journey with UPSRTC Bus from Lucknow to Moradabad ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Moradabad ?"
+          ],
+          "OPERATOR": [
+            "UPSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Moradabad"
+          ],
+          "OPERATOR": [
+            "UPSRTC"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Lucknow"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 2
+    },
+    {
+      "test_id": 45,
+      "query": "What is the cancellation policy for the Journey with Gola Bus Service from Delhi to Allahabad ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "DESTINATION_NAME": [
+            "Allahabad"
+          ],
+          "OPERATOR": [
+            "Gola Bus Service"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 46,
+      "query": "I would like to know the details about the Free Cancellation add-on for the journey with Gola Bus Service from Delhi to Allahabad .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Allahabad ."
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "Free Cancellation"
+          ],
+          "DESTINATION_NAME": [
+            "Allahabad"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "OPERATOR": [
+            "Gola Bus Service"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 47,
+      "query": "What is the cancellation policy for the Journey with INDO CANADIAN TRANSPORT CO PRIVATE LIMITED bus from Mukerian to Delhi ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Mukerian"
+          ],
+          "DESTINATION_NAME": [
+            "Delhi"
+          ],
+          "OPERATOR": [
+            "INDO CANADIAN TRANSPORT CO PRIVATE LIMITED"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 49,
+      "query": "What is the Traveldeals promo code for the government bus journey from Ajmer to Kota ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "OPERATOR": [
+            "government bus",
+            "Traveldeals"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Ajmer"
+          ],
+          "DESTINATION_NAME": [
+            "Kota"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 0
+    },
+    {
+      "test_id": 50,
+      "query": "What is the cancellation policy for the Journey with JBT TRAVELS bus from Vijayawada to Kuppam ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Vijayawada"
+          ],
+          "DESTINATION_NAME": [
+            "Kuppam"
+          ],
+          "OPERATOR": [
+            "JBT TRAVELS"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 51,
+      "query": "What is the cancellation policy for the Journey with GSRTC Bus from Ahmedabad to Ranavav ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Ranavav ?"
+          ],
+          "OPERATOR": [
+            "GSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Ranavav"
+          ],
+          "OPERATOR": [
+            "GSRTC"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Ahmedabad"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 2
+    },
+    {
+      "test_id": 52,
+      "query": "What is the cancellation policy for the Journey with BSR Tours And Travels Bus from Palakollu to Hyderabad ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Hyderabad ?"
+          ],
+          "OPERATOR": [
+            "BSR Tours And Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Hyderabad"
+          ],
+          "OPERATOR": [
+            "BSR Tours And Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Palakollu"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 2
+    },
+    {
+      "test_id": 53,
+      "query": "What are the bus coupons available for the Journey with Kaveri Travels Bus from Hyderabad to Eluru ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Eluru ?"
+          ],
+          "OPERATOR": [
+            "Kaveri Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Eluru"
+          ],
+          "OPERATOR": [
+            "Kaveri Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 54,
+      "query": "I want to book seats for a total of 4 members on the GSRTC Bus from Kheda to Surat , as the app is only showing 2 members .",
+      "failures": {
+        "missing": {
+          "SOURCE_NAME": [
+            "Kheda to"
+          ],
+          "DESTINATION_NAME": [
+            "Surat ,"
+          ],
+          "OPERATOR": [
+            "GSRTC Bus from"
+          ]
+        },
+        "incorrect": {
+          "TRAVELER": [
+            "4 members",
+            "2 members"
+          ],
+          "SOURCE_NAME": [
+            "Kheda"
+          ],
+          "DESTINATION_NAME": [
+            "Surat"
+          ],
+          "OPERATOR": [
+            "GSRTC"
+          ]
+        },
+        "correct": {}
+      },
+      "tp": 0,
+      "fp": 5,
+      "fn": 3
+    },
+    {
+      "test_id": 55,
+      "query": "What is the cancellation policy for the Journey with MRM Travels Bus from Tirunelveli to Bangalore ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "MRM Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "OPERATOR": [
+            "MRM Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Tirunelveli"
+          ],
+          "DESTINATION_NAME": [
+            "Bangalore"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 56,
+      "query": "I would like to know about add-ons like Free Cancellation or Trip Assured for the journey with MRM Travels bus from Tirunelveli to Bangalore .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Bangalore ."
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "Free Cancellation",
+            "Trip Assured"
+          ],
+          "DESTINATION_NAME": [
+            "Bangalore"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Tirunelveli"
+          ],
+          "OPERATOR": [
+            "MRM Travels"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 3,
+      "fn": 1
+    },
+    {
+      "test_id": 58,
+      "query": "Show me the best bus options from Ahmedabad to Surat .",
+      "failures": {
+        "missing": {
+          "SEMANTIC": [
+            "the"
+          ]
+        },
+        "incorrect": {
+          "SEMANTIC": [
+            "best"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Ahmedabad"
+          ],
+          "DESTINATION_NAME": [
+            "Surat"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 59,
+      "query": "What is the best bus option available from Ahmedabad to Surat ?",
+      "failures": {
+        "missing": {
+          "SEMANTIC": [
+            "best"
+          ]
+        },
+        "incorrect": {
+          "SEMANTIC": [
+            "best bus"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Ahmedabad"
+          ],
+          "DESTINATION_NAME": [
+            "Surat"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 60,
+      "query": "When will I receive the driver details for the Journey with Laxmi Holidays Pvt Ltd bus from Jaipur ( Rajasthan ) to Delhi ?",
+      "failures": {
+        "missing": {
+          "SOURCE_NAME": [
+            "Jaipur ( Rajasthan )"
+          ],
+          "DESTINATION_NAME": [
+            "Delhi ?"
+          ]
+        },
+        "incorrect": {
+          "SOURCE_NAME": [
+            "Jaipur Rajasthan"
+          ],
+          "DESTINATION_NAME": [
+            "Delhi"
+          ]
+        },
+        "correct": {
+          "OPERATOR": [
+            "Laxmi Holidays Pvt Ltd"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 62,
+      "query": "What is the refund policy on cancellation for my bus journey from Ahmedabad to Surat after tomorrow ?",
+      "failures": {
+        "missing": {
+          "DEPARTURE_DATE": [
+            "tomorrow ?"
+          ]
+        },
+        "incorrect": {
+          "DEPARTURE_DATE": [
+            "after",
+            "tomorrow"
+          ],
+          "ADD_ONS": [
+            "refund",
+            "cancellation"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Ahmedabad"
+          ],
+          "DESTINATION_NAME": [
+            "Surat"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 4,
+      "fn": 1
+    },
+    {
+      "test_id": 63,
+      "query": "What is the dropping point for the journey with zingbus Maxx from Indore to Delhi ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Delhi ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Delhi"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Indore"
+          ],
+          "OPERATOR": [
+            "zingbus Maxx"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 64,
+      "query": "What is the cancellation policy for the Journey with Bhaiya Travels Bus from Nagpur to Varanasi ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Varanasi ?"
+          ],
+          "OPERATOR": [
+            "Bhaiya Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Varanasi"
+          ],
+          "OPERATOR": [
+            "Bhaiya Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Nagpur"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 2
+    },
+    {
+      "test_id": 67,
+      "query": "What is the cancellation policy for the Journey with Kaveri Travels Bus from Tirupati to Hyderabad ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Hyderabad ?"
+          ],
+          "OPERATOR": [
+            "Kaveri Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Hyderabad"
+          ],
+          "OPERATOR": [
+            "Kaveri Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Tirupati"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 2
+    },
+    {
+      "test_id": 68,
+      "query": "What are the rest stops on the journey with Babaraj Travels Bus from Ahmedabad to Surat ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Surat ?"
+          ],
+          "OPERATOR": [
+            "Babaraj Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Surat"
+          ],
+          "OPERATOR": [
+            "Babaraj Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Ahmedabad"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 69,
+      "query": "What is the cancellation policy for the Journey with National Express NTHO Bus from Bangalore to Belagavi ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Belagavi ?"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Belagavi"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Bangalore"
+          ],
+          "OPERATOR": [
+            "National Express NTHO Bus"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 71,
+      "query": "I am unable to book tickets for the Journey with Shyamoli Paribahan Pvt Ltd Bus from Bangalore to Ernakulam .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Ernakulam ."
+          ],
+          "OPERATOR": [
+            "Shyamoli Paribahan Pvt Ltd Bus"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Ernakulam"
+          ],
+          "OPERATOR": [
+            "Shyamoli Paribahan Pvt Ltd"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Bangalore"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 72,
+      "query": "Show me the cheapest AC sleeper bus from Nellore to Gachibowli .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Gachibowli ."
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Gachibowli"
+          ]
+        },
+        "correct": {
+          "SEMANTIC": [
+            "cheapest"
+          ],
+          "SEAT_TYPE": [
+            "sleeper"
+          ],
+          "AC_TYPE": [
+            "AC"
+          ],
+          "SOURCE_NAME": [
+            "Nellore"
+          ]
+        }
+      },
+      "tp": 4,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 74,
+      "query": "What is the cancellation policy for the Journey with Rathimeena Travels B Bus from Chennai to Pondicherry ?",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Chennai"
+          ],
+          "DESTINATION_NAME": [
+            "Pondicherry"
+          ],
+          "OPERATOR": [
+            "Rathimeena Travels B"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 75,
+      "query": "I want to book a Trip Assured bus from Delhi to Shimla as my travel plan is fixed .",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "Trip Assured"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "DESTINATION_NAME": [
+            "Shimla"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 76,
+      "query": "I want to know about bus or cab options with TripAssured from Delhi to Shimla on 30th August .",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "TripAssured"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "DEPARTURE_DATE": [
+            "30th August"
+          ],
+          "DESTINATION_NAME": [
+            "Shimla"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 77,
+      "query": "I want to book Trip Assured for a bus from Delhi to Shimla on 30th August , with a pickup time at 10 PM .",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "ADD_ONS": [
+            "Trip Assured"
+          ]
+        },
+        "correct": {
+          "DEPARTURE_TIME": [
+            "10 PM"
+          ],
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "DEPARTURE_DATE": [
+            "30th August"
+          ],
+          "DESTINATION_NAME": [
+            "Shimla"
+          ]
+        }
+      },
+      "tp": 4,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 78,
+      "query": "I find Himalayan Nomad Ktc to be more reliable than Bedi Travels for my bus trip from Delhi to Shimla on 30th August . Please proceed with the booking .",
+      "failures": {
+        "missing": {},
+        "incorrect": {
+          "SEMANTIC": [
+            "reliable"
+          ]
+        },
+        "correct": {
+          "OPERATOR": [
+            "Himalayan Nomad Ktc",
+            "Bedi Travels"
+          ],
+          "SOURCE_NAME": [
+            "Delhi"
+          ],
+          "DEPARTURE_DATE": [
+            "30th August"
+          ],
+          "DESTINATION_NAME": [
+            "Shimla"
+          ]
+        }
+      },
+      "tp": 5,
+      "fp": 1,
+      "fn": 0
+    },
+    {
+      "test_id": 80,
+      "query": "What is the cancellation policy for the Journey with Essaar Bus from Tirunelveli to Coimbatore ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Coimbatore ?"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Coimbatore"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Tirunelveli"
+          ],
+          "OPERATOR": [
+            "Essaar Bus"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 81,
+      "query": "What are the payment options for the Journey with Anshi Raj Shree Travels Bus from Deoria ( Uttar Pradesh ) to Jaipur ( Rajasthan ) ?",
+      "failures": {
+        "missing": {
+          "SOURCE_NAME": [
+            "Deoria ( Uttar Pradesh )"
+          ],
+          "DESTINATION_NAME": [
+            "Jaipur ( Rajasthan ) ?"
+          ],
+          "OPERATOR": [
+            "Anshi Raj Shree Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "SOURCE_NAME": [
+            "Deoria Uttar Pradesh"
+          ],
+          "DESTINATION_NAME": [
+            "Jaipur Rajasthan"
+          ],
+          "OPERATOR": [
+            "Anshi Raj Shree Travels"
+          ]
+        },
+        "correct": {}
+      },
+      "tp": 0,
+      "fp": 3,
+      "fn": 3
+    },
+    {
+      "test_id": 82,
+      "query": "What is the cancellation policy for the Journey with Travel Point World LLP bus from Faridabad to Begusarai ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Begusarai ?"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Begusarai"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Faridabad"
+          ],
+          "OPERATOR": [
+            "Travel Point World LLP"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 83,
+      "query": "I want to use my wallet amount for the journey with A1 Travels Bus from Bangalore to Palani .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Palani ."
+          ],
+          "OPERATOR": [
+            "A1 Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Palani"
+          ],
+          "OPERATOR": [
+            "A1 Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Bangalore"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 84,
+      "query": "What is the cancellation policy for the Journey with Kalpaka Travels Bus from Bangalore to Payyanur ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "Kalpaka Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "OPERATOR": [
+            "Kalpaka Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Bangalore"
+          ],
+          "DESTINATION_NAME": [
+            "Payyanur"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 85,
+      "query": "What is the cancellation policy for the Journey with Pooja Travels Bus from Kankroli to Ahmedabad ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Ahmedabad ?"
+          ],
+          "OPERATOR": [
+            "Pooja Travels Bus"
+          ]
+        },
+        "incorrect": {
+          "ADD_ONS": [
+            "cancellation policy"
+          ],
+          "DESTINATION_NAME": [
+            "Ahmedabad"
+          ],
+          "OPERATOR": [
+            "Pooja Travels"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Kankroli"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 2
+    },
+    {
+      "test_id": 88,
+      "query": "Check the availability of a single sleeper bed on the Journey with Shyamoli Paribahan Pvt Ltd Bus from Bangalore to Berhampur .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Berhampur ."
+          ],
+          "SEAT_TYPE": [
+            "single sleeper"
+          ],
+          "OPERATOR": [
+            "Shyamoli Paribahan Pvt Ltd Bus"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Berhampur"
+          ],
+          "SEAT_TYPE": [
+            "single sleeper bed"
+          ],
+          "OPERATOR": [
+            "Shyamoli Paribahan Pvt Ltd"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Bangalore"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 3,
+      "fn": 3
+    },
+    {
+      "test_id": 89,
+      "query": "Please check if all traveler details have been filled in for my booking from Vijayawada to Bangalore .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Bangalore ."
+          ]
+        },
+        "incorrect": {
+          "TRAVELER": [
+            "all traveler"
+          ],
+          "DESTINATION_NAME": [
+            "Bangalore"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Vijayawada"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 1
+    },
+    {
+      "test_id": 92,
+      "query": "Show me the cheapest bus options for the journey with KRSNA Travels from Ulhasnagar to Mahabaleshwar .",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Mahabaleshwar ."
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Mahabaleshwar"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Ulhasnagar"
+          ],
+          "SEMANTIC": [
+            "cheapest"
+          ],
+          "OPERATOR": [
+            "KRSNA Travels"
+          ]
+        }
+      },
+      "tp": 3,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 93,
+      "query": "Find the cheapest bus from Ulhasnagar to Mahabaleshwar on 15 August with KRSNA Travels .",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "KRSNA Travels ."
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "KRSNA Travels"
+          ]
+        },
+        "correct": {
+          "SEMANTIC": [
+            "cheapest"
+          ],
+          "SOURCE_NAME": [
+            "Ulhasnagar"
+          ],
+          "DEPARTURE_DATE": [
+            "15 August"
+          ],
+          "DESTINATION_NAME": [
+            "Mahabaleshwar"
+          ]
+        }
+      },
+      "tp": 4,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 94,
+      "query": "Can a boy sit next to a girl ' s seat on the UFO Bus journey from Kozhikode to Ernakulam ?",
+      "failures": {
+        "missing": {
+          "DESTINATION_NAME": [
+            "Ernakulam ?"
+          ]
+        },
+        "incorrect": {
+          "DESTINATION_NAME": [
+            "Ernakulam"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Kozhikode"
+          ],
+          "OPERATOR": [
+            "UFO Bus"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 95,
+      "query": "Can a girl sit next to a boy ' s seat on the UFO Bus ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "UFO Bus ?"
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "UFO"
+          ]
+        },
+        "correct": {}
+      },
+      "tp": 0,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 96,
+      "query": "When will I get the driver details for the Journey with RSRTC Bus from Jaipur ( Rajasthan ) to Mathura ?",
+      "failures": {
+        "missing": {
+          "SOURCE_NAME": [
+            "Jaipur ( Rajasthan )"
+          ],
+          "DESTINATION_NAME": [
+            "Mathura ?"
+          ],
+          "OPERATOR": [
+            "RSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "SOURCE_NAME": [
+            "Jaipur Rajasthan"
+          ],
+          "DESTINATION_NAME": [
+            "Mathura"
+          ],
+          "OPERATOR": [
+            "RSRTC"
+          ]
+        },
+        "correct": {}
+      },
+      "tp": 0,
+      "fp": 3,
+      "fn": 3
+    },
+    {
+      "test_id": 98,
+      "query": "When will I receive the driver details for the Journey with R . S . Sodha Travels bus from Jaipur ( Rajasthan ) to Jaisalmer ?",
+      "failures": {
+        "missing": {
+          "SOURCE_NAME": [
+            "Jaipur ( Rajasthan )"
+          ],
+          "DESTINATION_NAME": [
+            "Jaisalmer ?"
+          ]
+        },
+        "incorrect": {
+          "SOURCE_NAME": [
+            "Jaipur Rajasthan"
+          ],
+          "DESTINATION_NAME": [
+            "Jaisalmer"
+          ]
+        },
+        "correct": {
+          "OPERATOR": [
+            "R . S . Sodha Travels"
+          ]
+        }
+      },
+      "tp": 1,
+      "fp": 2,
+      "fn": 2
+    },
+    {
+      "test_id": 99,
+      "query": "When will I receive the driver details for the Journey with TGSRTC Bus from Hyderabad to Khammam ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "TGSRTC Bus"
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "TGSRTC"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Hyderabad"
+          ],
+          "DESTINATION_NAME": [
+            "Khammam"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    },
+    {
+      "test_id": 100,
+      "query": "When will I receive the driver details for the NueGo bus journey from Jaipur to Delhi ?",
+      "failures": {
+        "missing": {
+          "OPERATOR": [
+            "NueGo"
+          ]
+        },
+        "incorrect": {
+          "OPERATOR": [
+            "NueGo bus"
+          ]
+        },
+        "correct": {
+          "SOURCE_NAME": [
+            "Jaipur"
+          ],
+          "DESTINATION_NAME": [
+            "Delhi"
+          ]
+        }
+      },
+      "tp": 2,
+      "fp": 1,
+      "fn": 1
+    }
+  ],
+  "errors": []
+}
